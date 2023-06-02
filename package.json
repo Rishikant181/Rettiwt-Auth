@@ -4,7 +4,9 @@
 	"description": "A library for authenticating aagainst Twitter API",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"build": "tsc",
+		"lint": "eslint .",
+		"format": "prettier --write ."
 	},
 	"repository": {
 		"type": "git",
@@ -25,5 +27,8 @@
 		"prettier": "2.8.8",
 		"typedoc": "0.24.7",
 		"typescript": "5.0.4"
+	},
+	"dependencies": {
+		"axios": "^1.4.0"
 	}
 }
