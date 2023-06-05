@@ -1,5 +1,9 @@
+// PACKAGES
+import axios from 'axios';
+
 // TYPES
 import { IAuthCredential } from "../types/AuthCredential";
+import { Result as GuestTokenResponse } from '../types/response/GuestToken';
 
 // MODELS
 import { AuthCookie } from './AuthCookie';
@@ -29,10 +33,26 @@ export class AuthCredential implements IAuthCredential {
 
     async get(cookie: AuthCookie): Promise<AuthCredential> {
         this.authToken = 'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
-        this.guestToken = '';
+        this.guestToken = await this.getGuestToken();
         this.csrfToken = cookie.ct0;
         this.cookie = cookie.toString();
 
         return Promise.resolve(this);
+    }
+
+    /**
+     * Generates a new guest token using the Twitter API.
+     * 
+     * @returns The generated guest token string.
+     */
+    private async getGuestToken(): Promise<string> {
+        // Getting the guest credentials from twitter
+        return await axios.post<GuestTokenResponse>('https://api.twitter.com/1.1/guest/activate.json', null, {
+            headers: {
+                /* eslint-disable */
+                'Authorization': this.authToken
+                /* eslint-enable */
+            }
+        }).then(res => res.data.guest_token);
     }
 }
