@@ -31,13 +31,18 @@ export class AuthCredential implements IAuthCredential {
     /** The cookie of the twitter account, which is used to authenticate against twitter. */
     cookie?: string;
 
+    /**
+     * Generates a new AuthCredentials using the given cookie.
+     * 
+     * @param cookie The cookie to be used for authenticating against Twitter.
+     */
     async get(cookie: AuthCookie): Promise<AuthCredential> {
         this.authToken = 'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
         this.guestToken = await this.getGuestToken();
         this.csrfToken = cookie.ct0;
         this.cookie = cookie.toString();
 
-        return Promise.resolve(this);
+        return this;
     }
 
     /**
