@@ -32,4 +32,19 @@ export class AuthCookie implements IAuthCookie {
         this.kdt = '';
         this.twid = '';
     }
+
+    /**
+     * Converts 'this' object to it's string representation.
+     */
+    toString(): string {
+        /** The string representation of 'this' object. */
+        let outStr: string = '';
+
+        // Iterating through the (key, value) pairs of this cookie
+        for (const [key, value] of Object.entries(this)) {
+            outStr += `${key}=${value as string};`;
+        }
+
+        return outStr;
+    }
 }

@@ -28,6 +28,11 @@ export class AuthCredential implements IAuthCredential {
     cookie?: string;
 
     async get(cookie: AuthCookie): Promise<AuthCredential> {
+        this.authToken = 'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
+        this.guestToken = '';
+        this.csrfToken = cookie.ct0;
+        this.cookie = cookie.toString();
 
+        return Promise.resolve(this);
     }
 }
