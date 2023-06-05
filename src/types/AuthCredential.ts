@@ -1,7 +1,7 @@
 /**
  * The credentials for authenticating against Twitter.
  *
- * Depending on which tokens are present, the authentication type is determines as follows:
+ * Depending on which tokens are present, the authentication type is determined as follows:
  * - authToken, guestToken => Guest authentication.
  * - authToken, csrfToken, cookie => User authentication.
  * - authToken, guestToken, cookie => Guest authentication while logging in.
