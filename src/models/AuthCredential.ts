@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 // ENUMS
-import { CredentialType } from '../enums/Authentication';
+import { ECredentialType } from '../enums/Authentication';
 
 // TYPES
 import { IAuthCredential } from '../types/AuthCredential';
@@ -35,7 +35,7 @@ export class AuthCredential implements IAuthCredential {
 	cookie?: string;
 
 	/** The types of credential. */
-	credentialType?: CredentialType;
+	credentialType?: ECredentialType;
 
 	/**
 	 * Generates a new AuthCredentials using the given credentials.
@@ -49,19 +49,19 @@ export class AuthCredential implements IAuthCredential {
 		// If guest credentials given
 		if (!cookie && guestToken) {
 			this.guestToken = guestToken;
-			this.credentialType = CredentialType.GUEST;
+			this.credentialType = ECredentialType.GUEST;
 		}
 		// If login credentials given
 		else if (cookie && guestToken) {
 			this.cookie = cookie.toString();
 			this.guestToken = guestToken;
-			this.credentialType = CredentialType.LOGIN;
+			this.credentialType = ECredentialType.LOGIN;
 		}
 		// If user credentials given
 		else if (cookie && !guestToken) {
 			this.cookie = cookie.toString();
 			this.csrfToken = cookie.ct0;
-			this.credentialType = CredentialType.USER;
+			this.credentialType = ECredentialType.USER;
 		}
 	}
 
