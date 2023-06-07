@@ -14,8 +14,6 @@ import { EHttpStatus, EAuthenticationErrors } from '../enums/Errors';
 /**
  * Step 3: Takes the email for login
  * @internal
- * 
- * @throws {@link AuthenticationErrors.InvalidEmail}, if email does not exist.
  */
 export async function enterUserIdentifier(email: string, cred: AuthCredential, flowToken: string): Promise<void> {
     // Executing the subtask
