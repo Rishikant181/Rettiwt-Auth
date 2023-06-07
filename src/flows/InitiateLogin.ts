@@ -5,6 +5,7 @@ import { Cookie, CookieJar } from 'cookiejar';
 // FLOWS
 import { getGuestToken, getAuthHeader } from './PreLogin';
 import { AuthCredential } from '../models/AuthCredential';
+import { jsInstrumentationSubtask } from './JsInstrumentationSubtask';
 
 // TYPES
 import { Root as IInitiateLoginResponse } from '../types/response/InitiateLogin';
@@ -35,5 +36,5 @@ export async function initiateLogin(): Promise<void> {
     cred = new AuthCredential(new AuthCookie(cookies.join(';').toString()), cred.guestToken);
 
     // Executing next subtask
-    await this.jsInstrumentationSubtask();
+    await jsInstrumentationSubtask(cred, flowToken);
 }

@@ -1,6 +1,5 @@
 // PACKAGES
 import { curly, CurlyResult } from 'node-libcurl';
-import { Cookie } from 'cookiejar';
 
 // FLOWS
 import { getAuthHeader } from './PreLogin';
@@ -11,9 +10,13 @@ import { Root as IJsInstrumentationResponse } from '../types/response/JsInstrume
 
 /**
  * Step 2: Does something
+ * 
  * @internal
+ * 
+ * @param cred The authentication credentials to use.
+ * @param flowToken The flow token required to exectute this flow
  */
-export async function jsInstrumentationSubtask(cred: AuthCredential, flowToken: string, cookie: Cookie[]): Promise<void> {
+export async function jsInstrumentationSubtask(cred: AuthCredential, flowToken: string): Promise<void> {
     // Executing the subtask
     const res: CurlyResult<IJsInstrumentationResponse> = await curly.post<IJsInstrumentationResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
         httpHeader: getAuthHeader(cred),
