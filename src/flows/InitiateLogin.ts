@@ -8,6 +8,7 @@ import { AuthCredential } from '../models/AuthCredential';
 
 // TYPES
 import { Root as IInitiateLoginResponse } from '../types/response/InitiateLogin';
+import { AuthCookie } from '../models/AuthCookie';
 
 /**
  * Step 1: Initiates login
@@ -15,7 +16,7 @@ import { Root as IInitiateLoginResponse } from '../types/response/InitiateLogin'
  */
 export async function initiateLogin(): Promise<void> {
     // Getting a new guest credential
-    const cred: AuthCredential = new AuthCredential(undefined, await getGuestToken())
+    let cred: AuthCredential = new AuthCredential(undefined, await getGuestToken())
 
     // Initiating the login process
     const res: CurlyResult<IInitiateLoginResponse> = await curly.post<IInitiateLoginResponse>('https://api.twitter.com/1.1/onboarding/task.json?flow_name=login', {
@@ -29,6 +30,9 @@ export async function initiateLogin(): Promise<void> {
 
     // Getting the flow token
     const flowToken = res.data.flow_token;
+
+    // Adding the cookie to the credential
+    cred = new AuthCredential(new AuthCookie(cookies.join(';').toString()), cred.guestToken);
 
     // Executing next subtask
     await this.jsInstrumentationSubtask();
