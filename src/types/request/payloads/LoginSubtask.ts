@@ -1,4 +1,4 @@
-export interface Root {
+export interface ILoginSubtaskPayload {
     flow_token: string
     subtask_inputs: SubtaskInput[]
 }
