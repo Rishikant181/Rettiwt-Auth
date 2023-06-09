@@ -1,5 +1,5 @@
 // TYPES
-import { IPasswordInput } from "../../types/request/payloads/Password";
+import { IPasswordInput } from "../../../../types/request/payloads/subtasks/Password";
 
 /**
  * The input data to be sent for logging in using password.

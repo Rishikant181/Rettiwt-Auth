@@ -1,5 +1,5 @@
 // TYPES
-import { IResponseData, ISettingResponse, ITextData, IUserIdentifierInput } from "../../types/request/payloads/UserIdentifier";
+import { IResponseData, ISettingResponse, ITextData, IUserIdentifierInput } from "../../../../types/request/payloads/subtasks/UserIdentifier";
 
 /**
  * The input data to be sent for identifying the user using email, phone, etc.

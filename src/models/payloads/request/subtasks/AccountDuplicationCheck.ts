@@ -1,5 +1,5 @@
 // TYPES
-import { IAccountDuplicationCheck } from "../../types/request/payloads/AccountDuplicationCheck";
+import { IAccountDuplicationCheck } from "../../../../types/request/payloads/subtasks/AccountDuplicationCheck";
 
 /**
  * The input data to be sent for checking account duplication.

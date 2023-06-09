@@ -1,9 +1,9 @@
 // TYPES
-import { IJsInstrumentationInput } from './JsInstrumentation';
-import { IUserIdentifierInput } from './UserIdentifier';
-import { IAlternateUserIdentifierInput } from './AlternateUserIdentifier';
-import { IPasswordInput } from './Password';
-import { IAccountDuplicationCheck } from './AccountDuplicationCheck';
+import { IJsInstrumentationInput } from './subtasks/JsInstrumentation';
+import { IUserIdentifierInput } from './subtasks/UserIdentifier';
+import { IAlternateUserIdentifierInput } from './subtasks/AlternateUserIdentifier';
+import { IPasswordInput } from './subtasks/Password';
+import { IAccountDuplicationCheck } from './subtasks/AccountDuplicationCheck';
 
 export interface ILoginSubtaskPayload {
     flow_token: string
