@@ -1,5 +1,6 @@
 // PACKAGES
 import { curly, CurlyResult } from 'node-libcurl';
+import { Cookie } from 'cookiejar';
 
 // FLOWS
 import { getAuthHeader } from './PreLogin';
@@ -19,7 +20,7 @@ import { AccountCredential } from '../models/AccountCredential';
  * Step 4: Takes the username for login
  * @internal
  */
-export async function enterAlternateUserIdentifier(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<void> {
+export async function enterAlternateUserIdentifier(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<Cookie[]> {
     // Executing the subtask
     const res: CurlyResult<IEnterAlternateUserIndentifierResponse> = await curly.post<IEnterAlternateUserIndentifierResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
         httpHeader: getAuthHeader(authCred),
@@ -49,5 +50,5 @@ export async function enterAlternateUserIdentifier(authCred: AuthCredential, flo
     flowToken = res.data.flow_token;
 
     // Executing next subtask
-    await enterPassword(authCred, flowToken, accountCred);
+    return await enterPassword(authCred, flowToken, accountCred);
 }

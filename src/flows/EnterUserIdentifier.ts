@@ -1,5 +1,6 @@
 // PACKAGES
 import { curly, CurlyResult } from 'node-libcurl';
+import { Cookie } from 'cookiejar';
 
 // FLOWS
 import { getAuthHeader } from './PreLogin';
@@ -23,7 +24,7 @@ import { AccountCredential } from '../models/AccountCredential';
  * @param flowToken The flow token required to exectute this flow
  * @param accountCred The credentials of the Twitter account to be logged into.
  */
-export async function enterUserIdentifier(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<void> {
+export async function enterUserIdentifier(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<Cookie[]> {
     // Executing the subtask
     const res: CurlyResult<IEnterUserIndentifierResponse> = await curly.post<IEnterUserIndentifierResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
         httpHeader: getAuthHeader(authCred),
@@ -69,18 +70,14 @@ export async function enterUserIdentifier(authCred: AuthCredential, flowToken: s
      * 
      * So, checking which is the subtask required by server, and executing that particular subtask.
      */
-    for (const task of res.data.subtasks) {
-        // If next subtask is to enter username
-        if (task.subtask_id == 'LoginEnterAlternateIdentifierSubtask') {
-            // Executing next subtask
-            await enterAlternateUserIdentifier(authCred, flowToken, accountCred);
-            break;
-        }
-        // If next subtask is to enter password
-        else if (task.subtask_id == 'LoginEnterPassword') {
-            // Executing next subtask
-            await enterPassword(authCred, flowToken, accountCred);
-            break;
-        }
+    // If next subtask is to enter username
+    if (res.data.subtasks.map(task => task.subtask_id).includes('LoginEnterAlternateIdentifierSubtask')) {
+        // Executing next subtask
+        return await enterAlternateUserIdentifier(authCred, flowToken, accountCred);
+    }
+    // If next subtask is to enter password
+    else {
+        // Executing next subtask
+        return await enterPassword(authCred, flowToken, accountCred);
     }
 }

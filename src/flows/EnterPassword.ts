@@ -1,5 +1,6 @@
 // PACKAGES
 import { curly, CurlyResult } from 'node-libcurl';
+import { Cookie } from 'cookiejar';
 
 // FLOWS
 import { getAuthHeader } from './PreLogin';
@@ -22,7 +23,7 @@ import { EHttpStatus, EAuthenticationErrors } from '../enums/Errors';
  * @param flowToken The flow token required to exectute this flow
  * @param accountCred The credentials of the Twitter account to be logged into.
  */
-export async function enterPassword(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<void> {
+export async function enterPassword(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<Cookie[]> {
     // Executing the subtask
     const res: CurlyResult<IEnterPasswordResponse> = await curly.post<IEnterPasswordResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
         httpHeader: getAuthHeader(authCred),
@@ -52,5 +53,5 @@ export async function enterPassword(authCred: AuthCredential, flowToken: string,
     flowToken = res.data.flow_token;
 
     // Executing next subtask
-    await accountDuplicationCheck(authCred, flowToken);
+    return await accountDuplicationCheck(authCred, flowToken);
 }

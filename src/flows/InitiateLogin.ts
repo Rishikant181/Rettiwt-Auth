@@ -19,7 +19,7 @@ import { AccountCredential } from '../models/AccountCredential';
  * 
  * @param accountCred The credentials of the Twitter account to be logged into.
  */
-export async function initiateLogin(accountCred: AccountCredential): Promise<void> {
+export async function initiateLogin(accountCred: AccountCredential): Promise<Cookie[]> {
     // Getting a new guest credential
     let authCred: AuthCredential = new AuthCredential(undefined, await getGuestToken())
 
@@ -40,5 +40,5 @@ export async function initiateLogin(accountCred: AccountCredential): Promise<voi
     authCred = new AuthCredential(new AuthCookie(cookies.join(';').toString()), authCred.guestToken);
 
     // Executing next subtask
-    await jsInstrumentationSubtask(authCred, flowToken, accountCred);
+    return await jsInstrumentationSubtask(authCred, flowToken, accountCred);
 }
