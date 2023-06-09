@@ -1,13 +1,13 @@
 // TYPES
-import { IAccountDuplicationCheck } from "../../../../types/request/payloads/subtasks/AccountDuplicationCheck";
+import { IAccountDuplicationCheck } from '../../../../types/request/payloads/subtasks/AccountDuplicationCheck';
 
 /**
  * The input data to be sent for checking account duplication.
  */
 export class AccountDuplicationCheckInput implements IAccountDuplicationCheck {
-    link: string;
+	link: string;
 
-    constructor() {
-        this.link = 'AccountDuplicationCheck_false';
-    }
+	constructor() {
+		this.link = 'AccountDuplicationCheck_false';
+	}
 }

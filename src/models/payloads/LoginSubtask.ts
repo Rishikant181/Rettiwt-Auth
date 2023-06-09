@@ -1,5 +1,5 @@
 // TYPES
-import { ILoginSubtaskInput, ILoginSubtaskPayload } from "../../types/request/payloads/LoginSubtask";
+import { ILoginSubtaskInput, ILoginSubtaskPayload } from '../../types/request/payloads/LoginSubtask';
 
 // ENUMS
 import { ELoginSubtasks } from '../../enums/Login';
@@ -15,57 +15,53 @@ import { AccountDuplicationCheckInput } from './request/subtasks/AccountDuplicat
  * The payload to be sent for each login subtask.
  */
 export class LoginSubtaskPayload implements ILoginSubtaskPayload {
-    /* eslint-disable */
-    flow_token: string;
-    subtask_inputs: LoginSubtaskInput[];
-    /* eslint-enable */
+	/* eslint-disable */
+	flow_token: string;
+	subtask_inputs: LoginSubtaskInput[];
+	/* eslint-enable */
 
-    /**
-     * @param subtaskId The id of the subtask to be executed.
-     * @param flowToken The flow token for the subtask to be executed.
-     * @param inputText The input string data to be sent in payload.
-     */
-    constructor(subtaskId: ELoginSubtasks, flowToken: string, inputText: string) {
-        this.flow_token = flowToken;
-        this.subtask_inputs = [new LoginSubtaskInput(subtaskId, inputText)];
-    }
+	/**
+	 * @param subtaskId The id of the subtask to be executed.
+	 * @param flowToken The flow token for the subtask to be executed.
+	 * @param inputText The input string data to be sent in payload.
+	 */
+	constructor(subtaskId: ELoginSubtasks, flowToken: string, inputText: string) {
+		this.flow_token = flowToken;
+		this.subtask_inputs = [new LoginSubtaskInput(subtaskId, inputText)];
+	}
 }
 
 /**
  * The subtask input according to the type of subtask to be executed.
  */
 class LoginSubtaskInput implements ILoginSubtaskInput {
-    /* eslint-disable */
-    subtask_id: string
-    js_instrumentation?: JsInstrumentationInput;
-    settings_list?: UserIdentifierInput;
-    enter_text?: AlternateUserIdentifierInput;
-    enter_password?: PasswordInput;
-    check_logged_in_account?: AccountDuplicationCheckInput;
-    /* eslint-enable */
+	/* eslint-disable */
+	subtask_id: string;
+	js_instrumentation?: JsInstrumentationInput;
+	settings_list?: UserIdentifierInput;
+	enter_text?: AlternateUserIdentifierInput;
+	enter_password?: PasswordInput;
+	check_logged_in_account?: AccountDuplicationCheckInput;
+	/* eslint-enable */
 
-    /**
-     * @param subtaskId The id of the subtask to be executed.
-     * @param inputText The input string data to be sent.
-     */
-    constructor(subtaskId: ELoginSubtasks, inputText: string) {
-        this.subtask_id = subtaskId;
+	/**
+	 * @param subtaskId The id of the subtask to be executed.
+	 * @param inputText The input string data to be sent.
+	 */
+	constructor(subtaskId: ELoginSubtasks, inputText: string) {
+		this.subtask_id = subtaskId;
 
-        // Initializing appropriate subtask input according to subtaskId
-        if (subtaskId == ELoginSubtasks.JS_INSTRUMENTATION) {
-            this.js_instrumentation = new JsInstrumentationInput();
-        }
-        else if (subtaskId == ELoginSubtasks.ENTER_USER_IDENTIFIER) {
-            this.settings_list = new UserIdentifierInput(inputText);
-        }
-        else if (subtaskId == ELoginSubtasks.ENTER_ALTERNATE_USER_IDENTIFIER) {
-            this.enter_text = new AlternateUserIdentifierInput(inputText);
-        }
-        else if (subtaskId == ELoginSubtasks.ENTER_PASSWORD) {
-            this.enter_password = new PasswordInput(inputText);
-        }
-        else if (subtaskId == ELoginSubtasks.ACCOUNT_DUPLICATION_CHECK) {
-            this.check_logged_in_account = new AccountDuplicationCheckInput();
-        }
-    }
+		// Initializing appropriate subtask input according to subtaskId
+		if (subtaskId == ELoginSubtasks.JS_INSTRUMENTATION) {
+			this.js_instrumentation = new JsInstrumentationInput();
+		} else if (subtaskId == ELoginSubtasks.ENTER_USER_IDENTIFIER) {
+			this.settings_list = new UserIdentifierInput(inputText);
+		} else if (subtaskId == ELoginSubtasks.ENTER_ALTERNATE_USER_IDENTIFIER) {
+			this.enter_text = new AlternateUserIdentifierInput(inputText);
+		} else if (subtaskId == ELoginSubtasks.ENTER_PASSWORD) {
+			this.enter_password = new PasswordInput(inputText);
+		} else if (subtaskId == ELoginSubtasks.ACCOUNT_DUPLICATION_CHECK) {
+			this.check_logged_in_account = new AccountDuplicationCheckInput();
+		}
+	}
 }

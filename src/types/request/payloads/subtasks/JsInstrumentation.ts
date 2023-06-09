@@ -1,4 +1,4 @@
 export interface IJsInstrumentationInput {
-    response: string
-    link: string
+	response: string;
+	link: string;
 }

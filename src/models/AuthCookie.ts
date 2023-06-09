@@ -23,10 +23,8 @@ export class AuthCookie implements IAuthCookie {
 
 	/**
 	 * Creates a new AuthCookie object from the given cookie string.
-	 *
-	 * @param cookie The cookie string containing all the required cookies.
 	 */
-	constructor(cookie: string) {
+	constructor() {
 		this.auth_token = '';
 		this.ct0 = '';
 		this.kdt = '';

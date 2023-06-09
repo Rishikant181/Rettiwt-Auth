@@ -1,4 +1,4 @@
 export interface IPasswordInput {
-    password: string
-    link: string
+	password: string;
+	link: string;
 }
