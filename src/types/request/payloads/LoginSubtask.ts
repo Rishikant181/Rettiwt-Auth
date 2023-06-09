@@ -1,50 +1,50 @@
 export interface ILoginSubtaskPayload {
     flow_token: string
-    subtask_inputs: SubtaskInput[]
+    subtask_inputs: ILoginSubtaskInput[]
 }
 
-export interface SubtaskInput {
+export interface ILoginSubtaskInput {
     subtask_id: string
-    js_instrumentation?: JsInstrumentation
-    settings_list?: SettingsList
-    enter_text?: EnterText
-    enter_password?: EnterPassword
-    check_logged_in_account?: CheckLoggedInAccount
+    js_instrumentation?: IJsInstrumentationInput
+    settings_list?: IUserIdentifierInput
+    enter_text?: IAlternateUserIdentifierInput
+    enter_password?: IPasswordInput
+    check_logged_in_account?: ICheckLoggedInInput
 }
 
-export interface JsInstrumentation {
+export interface IJsInstrumentationInput {
     response: string
     link: string
 }
 
-export interface SettingsList {
-    setting_responses: SettingResponse[]
+export interface IUserIdentifierInput {
+    setting_responses: ISettingResponse[]
     link: string
 }
 
-export interface SettingResponse {
+export interface ISettingResponse {
     key: string
-    response_data: ResponseData
+    response_data: IResponseData
 }
 
-export interface ResponseData {
-    text_data: TextData
+export interface IResponseData {
+    text_data: ITextData
 }
 
-export interface TextData {
+export interface ITextData {
     result: string
 }
 
-export interface EnterText {
+export interface IAlternateUserIdentifierInput {
     text: string
     link: string
 }
 
-export interface EnterPassword {
+export interface IPasswordInput {
     password: string
     link: string
 }
 
-export interface CheckLoggedInAccount {
+export interface ICheckLoggedInInput {
     link: string
 }
