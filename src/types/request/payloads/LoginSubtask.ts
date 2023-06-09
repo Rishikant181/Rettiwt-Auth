@@ -3,7 +3,7 @@ import { IJsInstrumentationInput } from './JsInstrumentation';
 import { IUserIdentifierInput } from './UserIdentifier';
 import { IAlternateUserIdentifierInput } from './AlternateUserIdentifier';
 import { IPasswordInput } from './Password';
-import { ICheckLoggedInInput } from './CheckLoggedIn';
+import { IAccountDuplicationCheck } from './AccountDuplicationCheck';
 
 export interface ILoginSubtaskPayload {
     flow_token: string
@@ -16,5 +16,5 @@ export interface ILoginSubtaskInput {
     settings_list?: IUserIdentifierInput
     enter_text?: IAlternateUserIdentifierInput
     enter_password?: IPasswordInput
-    check_logged_in_account?: ICheckLoggedInInput
+    check_logged_in_account?: IAccountDuplicationCheck
 }
