@@ -4,6 +4,8 @@ import { curly, CurlyResult } from 'node-libcurl';
 // FLOWS
 import { getAuthHeader } from './PreLogin';
 import { AuthCredential } from '../models/AuthCredential';
+import { enterAlternateUserIdentifier } from './EnterAlternateUserIdentifier';
+import { enterPassword } from './EnterPassword';
 
 // TYPES
 import { Root as IEnterUserIndentifierResponse } from '../types/response/EnterUserIndentifier';
@@ -11,14 +13,20 @@ import { Root as IEnterUserIndentifierResponse } from '../types/response/EnterUs
 // ENUMS
 import { EHttpStatus, EAuthenticationErrors } from '../enums/Errors';
 
+// MODELS
+import { AccountCredential } from '../models/AccountCredential';
+
 /**
  * Step 3: Takes the email for login
- * @internal
+ * 
+ * @param authCred The authentication credentials to use.
+ * @param flowToken The flow token required to exectute this flow
+ * @param accountCred The credentials of the Twitter account to be logged into.
  */
-export async function enterUserIdentifier(email: string, cred: AuthCredential, flowToken: string): Promise<void> {
+export async function enterUserIdentifier(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<void> {
     // Executing the subtask
     const res: CurlyResult<IEnterUserIndentifierResponse> = await curly.post<IEnterUserIndentifierResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
-        httpHeader: getAuthHeader(cred),
+        httpHeader: getAuthHeader(authCred),
         sslVerifyPeer: false,
         /* eslint-disable */
         postFields: JSON.stringify({
@@ -32,7 +40,7 @@ export async function enterUserIdentifier(email: string, cred: AuthCredential, f
                                 "key": "user_identifier",
                                 "response_data": {
                                     "text_data": {
-                                        "result": email
+                                        "result": accountCred.email
                                     }
                                 }
                             }
@@ -65,13 +73,13 @@ export async function enterUserIdentifier(email: string, cred: AuthCredential, f
         // If next subtask is to enter username
         if (task.subtask_id == 'LoginEnterAlternateIdentifierSubtask') {
             // Executing next subtask
-            await enterAlternateUserIdentifier();
+            await enterAlternateUserIdentifier(authCred, flowToken, accountCred);
             break;
         }
         // If next subtask is to enter password
         else if (task.subtask_id == 'LoginEnterPassword') {
             // Executing next subtask
-            await enterPassword();
+            await enterPassword(authCred, flowToken, accountCred);
             break;
         }
     }

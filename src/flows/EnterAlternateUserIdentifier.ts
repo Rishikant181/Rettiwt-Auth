@@ -3,7 +3,7 @@ import { curly, CurlyResult } from 'node-libcurl';
 
 // FLOWS
 import { getAuthHeader } from './PreLogin';
-import { AuthCredential } from '../models/AuthCredential';
+import { enterPassword } from './EnterPassword';
 
 // TYPES
 import { Root as IEnterAlternateUserIndentifierResponse } from '../types/response/EnterAlternateUserIdentifier';
@@ -11,14 +11,18 @@ import { Root as IEnterAlternateUserIndentifierResponse } from '../types/respons
 // ENUMS
 import { EHttpStatus, EAuthenticationErrors } from '../enums/Errors';
 
+// MODELS
+import { AuthCredential } from '../models/AuthCredential';
+import { AccountCredential } from '../models/AccountCredential';
+
 /**
  * Step 4: Takes the username for login
  * @internal
  */
-export async function enterAlternateUserIdentifier(userName: string, flowToken: string, cred: AuthCredential): Promise<void> {
+export async function enterAlternateUserIdentifier(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<void> {
     // Executing the subtask
     const res: CurlyResult<IEnterAlternateUserIndentifierResponse> = await curly.post<IEnterAlternateUserIndentifierResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
-        httpHeader: getAuthHeader(cred),
+        httpHeader: getAuthHeader(authCred),
         sslVerifyPeer: false,
         /* eslint-disable */
         postFields: JSON.stringify({
@@ -27,7 +31,7 @@ export async function enterAlternateUserIdentifier(userName: string, flowToken: 
                 {
                     "subtask_id": "LoginEnterAlternateIdentifierSubtask",
                     "enter_text": {
-                        "text": userName,
+                        "text": accountCred.userName,
                         "link": "next_link"
                     }
                 }
@@ -45,5 +49,5 @@ export async function enterAlternateUserIdentifier(userName: string, flowToken: 
     flowToken = res.data.flow_token;
 
     // Executing next subtask
-    await enterPassword();
+    await enterPassword(authCred, flowToken, accountCred);
 }

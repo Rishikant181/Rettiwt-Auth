@@ -11,12 +11,14 @@ import { Root as IAccountDuplicationCheckResponse } from '../types/response/Acco
 
 /**
  * Step 6: Gets the actual cookies
- * @internal
+ * 
+ * @param authCred The authentication credentials to use.
+ * @param flowToken The flow token required to exectute this flow
  */
-export async function accountDuplicationCheck(flowToken: string, cred: AuthCredential): Promise<Cookie[]> {
+export async function accountDuplicationCheck(authCred: AuthCredential, flowToken: string): Promise<Cookie[]> {
     // Executing the subtask
     const res: CurlyResult<IAccountDuplicationCheckResponse> = await curly.post<IAccountDuplicationCheckResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
-        httpHeader: getAuthHeader(cred),
+        httpHeader: getAuthHeader(authCred),
         sslVerifyPeer: false,
         /* eslint-disable */
         postFields: JSON.stringify({

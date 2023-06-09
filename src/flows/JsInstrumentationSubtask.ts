@@ -1,25 +1,29 @@
 // PACKAGES
 import { curly, CurlyResult } from 'node-libcurl';
+import { Cookie } from 'cookiejar';
 
 // FLOWS
 import { getAuthHeader } from './PreLogin';
-import { AuthCredential } from '../models/AuthCredential';
+import { enterUserIdentifier } from './EnterUserIdentifier';
 
 // TYPES
 import { Root as IJsInstrumentationResponse } from '../types/response/JsInstrumentationSubtask';
 
+// MODELS
+import { AuthCredential } from '../models/AuthCredential';
+import { AccountCredential } from '../models/AccountCredential';
+
 /**
  * Step 2: Does something
  * 
- * @internal
- * 
- * @param cred The authentication credentials to use.
+ * @param authCred The authentication credentials to use.
  * @param flowToken The flow token required to exectute this flow
+ * @param accountCred The credentials of the Twitter account to be logged into.
  */
-export async function jsInstrumentationSubtask(cred: AuthCredential, flowToken: string): Promise<void> {
+export async function jsInstrumentationSubtask(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<Cookie[]> {
     // Executing the subtask
     const res: CurlyResult<IJsInstrumentationResponse> = await curly.post<IJsInstrumentationResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
-        httpHeader: getAuthHeader(cred),
+        httpHeader: getAuthHeader(authCred),
         sslVerifyPeer: false,
         /* eslint-disable */
         postFields: JSON.stringify({
@@ -41,5 +45,5 @@ export async function jsInstrumentationSubtask(cred: AuthCredential, flowToken: 
     flowToken = res.data.flow_token;
 
     // Executing next subtask
-    await this.enterUserIdentifier();
+    return await enterUserIdentifier(authCred, flowToken, accountCred);
 }

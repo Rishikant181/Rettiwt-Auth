@@ -3,24 +3,29 @@ import { curly, CurlyResult } from 'node-libcurl';
 
 // FLOWS
 import { getAuthHeader } from './PreLogin';
-import { AuthCredential } from '../models/AuthCredential';
+import { accountDuplicationCheck } from './AccountDuplicationCheck';
 
 // TYPES
 import { Root as IEnterPasswordResponse } from '../types/response/EnterPassword';
+
+// MODELS
+import { AuthCredential } from '../models/AuthCredential';
+import { AccountCredential } from '../models/AccountCredential';
 
 // ENUMS
 import { EHttpStatus, EAuthenticationErrors } from '../enums/Errors';
 
 /**
  * Step 5: Takes the password for login
- * @internal
  * 
- * @throws {@link AuthenticationErrors.InvalidPassword}, incorrect password entered.
+ * @param authCred The authentication credentials to use.
+ * @param flowToken The flow token required to exectute this flow
+ * @param accountCred The credentials of the Twitter account to be logged into.
  */
-export async function enterPassword(password: string, flowToken: string, cred: AuthCredential): Promise<void> {
+export async function enterPassword(authCred: AuthCredential, flowToken: string, accountCred: AccountCredential): Promise<void> {
     // Executing the subtask
     const res: CurlyResult<IEnterPasswordResponse> = await curly.post<IEnterPasswordResponse>('https://api.twitter.com/1.1/onboarding/task.json', {
-        httpHeader: getAuthHeader(cred),
+        httpHeader: getAuthHeader(authCred),
         sslVerifyPeer: false,
         /* eslint-disable */
         postFields: JSON.stringify({
@@ -29,7 +34,7 @@ export async function enterPassword(password: string, flowToken: string, cred: A
                 {
                     "subtask_id": "LoginEnterPassword",
                     "enter_password": {
-                        "password": password,
+                        "password": accountCred.password,
                         "link": "next_link"
                     }
                 }
@@ -47,5 +52,5 @@ export async function enterPassword(password: string, flowToken: string, cred: A
     flowToken = res.data.flow_token;
 
     // Executing next subtask
-    await accountDuplicationCheck();
+    await accountDuplicationCheck(authCred, flowToken);
 }
