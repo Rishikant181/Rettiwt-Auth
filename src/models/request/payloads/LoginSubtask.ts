@@ -1,15 +1,15 @@
 // TYPES
-import { ILoginSubtaskInput, ILoginSubtaskPayload } from '../../types/request/payloads/LoginSubtask';
+import { ILoginSubtaskInput, ILoginSubtaskPayload } from '../../../types/request/payloads/LoginSubtask';
 
 // ENUMS
-import { ELoginSubtasks } from '../../enums/Login';
+import { ELoginSubtasks } from '../../../enums/Login';
 
 // MODELS
-import { JsInstrumentationInput } from './request/subtasks/JsInstrumentation';
-import { UserIdentifierInput } from './request/subtasks/UserIdentifier';
-import { AlternateUserIdentifierInput } from './request/subtasks/AlternateUserIdentifier';
-import { PasswordInput } from './request/subtasks/Password';
-import { AccountDuplicationCheckInput } from './request/subtasks/AccountDuplicationCheck';
+import { JsInstrumentationInput } from './subtasks/JsInstrumentation';
+import { UserIdentifierInput } from './subtasks/UserIdentifier';
+import { AlternateUserIdentifierInput } from './subtasks/AlternateUserIdentifier';
+import { PasswordInput } from './subtasks/Password';
+import { AccountDuplicationCheckInput } from './subtasks/AccountDuplicationCheck';
 
 /**
  * The payload to be sent for each login subtask.
