@@ -1,13 +1,17 @@
 // PACKAGES
 import axios from 'axios';
 
+// ENUMS
+import { ELoginSubtasks } from '../enums/Login';
+
 // TYPES
 import { Root as IGuestTokenResponse } from '../types/response/GuestToken';
 import { Root as ILoginSubtaskResponse } from '../types/response/LoginSubtask';
 
 // MODELS
 import { AuthCredential } from '../models/AuthCredential';
-import { ELoginSubtasks } from '../enums/Login';
+import { AccountCredential } from '../models/AccountCredential';
+import { LoginSubtaskPayload } from '../models/request/payloads/LoginSubtask';
 
 /**
  * A class that deals with authenticating against Twitter API.
@@ -35,7 +39,7 @@ export class AuthService {
     /**
      * Initiates the login process and gets the required flow token and cookies for the login process.
      */
-    async initiateLogin(): Promise<void> {
+    private async initiateLogin(): Promise<void> {
         await axios.post<ILoginSubtaskResponse>('https://api.twitter.com/1.1/onboarding/task.json?flow_name=login', null, {
             headers: {
                 /* eslint-disable */
@@ -47,6 +51,29 @@ export class AuthService {
             this.flowToken = res.data.flow_token;
             this.cookies = res.headers['set-cookie'] as string[];
         })
+    }
+
+    /**
+     * Generates the apporpriate payload for the given login subtask and given data.
+     * 
+     * @param subtask The name of the subtask.
+     * @param flowToken The flow token for the subtask.
+     * @param accCred The account credentials to the Twitter account.
+     * @returns The requried payload.
+     */
+    private getSubtaskPayload(subtask: ELoginSubtasks, flowToken: string, accCred: AccountCredential): LoginSubtaskPayload {
+        if (subtask == ELoginSubtasks.ENTER_USER_IDENTIFIER) {
+            return new LoginSubtaskPayload(subtask, flowToken, accCred.email);
+        }
+        else if (subtask == ELoginSubtasks.ENTER_ALTERNATE_USER_IDENTIFIER) {
+            return new LoginSubtaskPayload(subtask, flowToken, accCred.userName);
+        }
+        else if (subtask == ELoginSubtasks.ENTER_PASSWORD) {
+            return new LoginSubtaskPayload(subtask, flowToken, accCred.password);
+        }
+        else {
+            return new LoginSubtaskPayload(subtask, flowToken);
+        }
     }
 
     /**
@@ -72,5 +99,13 @@ export class AuthService {
             });
 
         return cred;
+    }
+
+    async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
+        // Creating a new guest credential
+        this.cred = await this.getGuestCredential();
+
+        // Initiating the login process
+        await this.initiateLogin();
     }
 }
