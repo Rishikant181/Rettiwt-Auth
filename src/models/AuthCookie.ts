@@ -1,3 +1,6 @@
+// PACKAGES
+import { Cookie, CookieJar } from 'cookiejar';
+
 // TYPES
 import { IAuthCookie } from '../types/AuthCookie';
 
@@ -9,26 +12,42 @@ import { IAuthCookie } from '../types/AuthCookie';
 export class AuthCookie implements IAuthCookie {
 	/* eslint-disable */
 	/** Token used to authenticate a device. */
-	kdt: string;
+	kdt: string = '';
 
 	/** Token used to authenticate a user using a Twitter ID. */
-	twid: string;
+	twid: string = '';
 
 	/** The CSRF token of the session. */
-	ct0: string;
+	ct0: string = '';
 
 	/** The authentication token used while logging in to the account. */
-	auth_token: string;
+	auth_token: string = '';
 	/* eslint-enable */
 
 	/**
 	 * Creates a new AuthCookie object from the given cookie string.
+	 * 
+	 * @param cookieStr The cookie string list obtained from set-cookie header.
 	 */
-	constructor() {
-		this.auth_token = '';
-		this.ct0 = '';
-		this.kdt = '';
-		this.twid = '';
+	constructor(cookieStr: string[]) {
+		// Storing the cookies in cookie jar
+		const cookies: Cookie[] = new CookieJar().setCookies(cookieStr);
+
+		// Parsing the cookies
+		for (const cookie of cookies) {
+			if (cookie.name == 'kdt') {
+				this.kdt = cookie.value;
+			}
+			else if (cookie.name == 'twid') {
+				this.twid = cookie.value;
+			}
+			else if (cookie.name == 'ct0') {
+				this.ct0 = cookie.value;
+			}
+			else if (cookie.name == 'auth_token') {
+				this.auth_token = cookie.value;
+			}
+		}
 	}
 
 	/**
