@@ -26,7 +26,7 @@ export class AuthCookie implements IAuthCookie {
 
 	/**
 	 * Creates a new AuthCookie object from the given cookie string.
-	 * 
+	 *
 	 * @param cookieStr The cookie string list obtained from set-cookie header.
 	 */
 	constructor(cookieStr: string[]) {
@@ -37,14 +37,11 @@ export class AuthCookie implements IAuthCookie {
 		for (const cookie of cookies) {
 			if (cookie.name == 'kdt') {
 				this.kdt = cookie.value;
-			}
-			else if (cookie.name == 'twid') {
+			} else if (cookie.name == 'twid') {
 				this.twid = cookie.value;
-			}
-			else if (cookie.name == 'ct0') {
+			} else if (cookie.name == 'ct0') {
 				this.ct0 = cookie.value;
-			}
-			else if (cookie.name == 'auth_token') {
+			} else if (cookie.name == 'auth_token') {
 				this.auth_token = cookie.value;
 			}
 		}
