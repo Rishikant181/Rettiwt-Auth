@@ -12,28 +12,35 @@ import { Root as ILoginSubtaskResponse } from '../types/response/LoginSubtask';
 import { AuthCredential } from '../models/AuthCredential';
 import { AccountCredential } from '../models/AccountCredential';
 import { LoginSubtaskPayload } from '../models/request/payloads/LoginSubtask';
+import { AuthCookie } from '../models/AuthCookie';
 
 /**
  * A class that deals with authenticating against Twitter API.
  */
 export class AuthService {
-    /** The current flow to be executed. */
-    flowName: string;
-
     /** The current flow token. */
-    flowToken: string;
+    private flowToken: string;
 
     /** The current auth credentials. */
-    cred: AuthCredential;
+    private cred: AuthCredential;
 
     /** The current cookies */
-    cookies: string[];
+    private cookies: string[];
+
+    /** The order in which the login subtasks must be executed. */
+    private subtasks: ELoginSubtasks[];
 
     constructor() {
-        this.flowName = ELoginSubtasks.JS_INSTRUMENTATION;
         this.flowToken = '';
         this.cred = new AuthCredential();
         this.cookies = [];
+        this.subtasks = [
+            ELoginSubtasks.JS_INSTRUMENTATION,
+            ELoginSubtasks.ENTER_USER_IDENTIFIER,
+            ELoginSubtasks.ENTER_ALTERNATE_USER_IDENTIFIER,
+            ELoginSubtasks.ENTER_PASSWORD,
+            ELoginSubtasks.ACCOUNT_DUPLICATION_CHECK
+        ]
     }
 
     /**
@@ -101,11 +108,58 @@ export class AuthService {
         return cred;
     }
 
+    /**
+     * Fetches the credentials for uses authentication, from Twitter API.
+     * 
+     * @param accCred The credentials (email, username and password) to the Twitter account.
+     * @returns The credentials containing the authenticated tokens.
+     */
     async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
         // Creating a new guest credential
         this.cred = await this.getGuestCredential();
 
         // Initiating the login process
         await this.initiateLogin();
+
+        // Executing the subtasks in the pre-defined order
+        for (let i: number = 0; i < this.subtasks.length; i++) {
+            // Preparing the subtask payload
+            const payload: LoginSubtaskPayload = this.getSubtaskPayload(this.subtasks[i], this.flowToken, accCred);
+
+            // Executing the subtask
+            await axios.post<ILoginSubtaskResponse>('https://api.twitter.com/1.1/onboarding/task.json', payload, {
+                headers: {
+                    /* eslint-disable */
+                    'Authorization': `Bearer ${this.cred.authToken as string}`,
+                    'x-guest-token': this.cred.guestToken,
+                    'Cookie': this.cookies.join(';')
+                    /* eslint-enable */
+                }
+            }).then(res => {
+                /**
+                 * After the execution of ENTER_USER_IDENTIFIER subtask, two outcomes are possible:
+                 * 
+                 * 1. Twitter API asks username, then asks for password
+                 * 2. Twitter API directly asks for password, skipping username check
+                 * 
+                 * Therefore, it is checked if Twitter API is asking for password after ENTER_USER_IDENTIFIER subtask.
+                 * 
+                 * If yes, then the next subtask (ENTER_ALTERNATE_USER_IDENTIFIER) is skipped and ENTER_PASSWORD subtask is run directly.
+                 */
+                if (this.subtasks[i] == ELoginSubtasks.ENTER_USER_IDENTIFIER && res.data.subtasks.map(subtask => subtask.subtask_id).includes(ELoginSubtasks.ENTER_PASSWORD)) {
+                    i++;
+                }
+
+                // Getting the flow token required for next subtask
+                this.flowToken = res.data.flow_token;
+
+                // If this is the last subtask, namely ACCOUNT_DUPLICATION_CHECK, setting the AuthCredentials
+                if (this.subtasks[i] == ELoginSubtasks.ACCOUNT_DUPLICATION_CHECK) {
+                    this.cred = new AuthCredential(new AuthCookie(res.headers['set-cookie'] as string[]));
+                }
+            })
+        }
+
+        return this.cred;
     }
 }
