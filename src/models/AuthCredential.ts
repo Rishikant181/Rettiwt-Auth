@@ -3,8 +3,6 @@ import { ECredentialType } from '../enums/Authentication';
 
 // TYPES
 import { IAuthCredential } from '../types/AuthCredential';
-
-// MODELS
 import { AuthCookie } from './AuthCookie';
 
 /**
@@ -28,7 +26,7 @@ export class AuthCredential implements IAuthCredential {
 	csrfToken?: string;
 
 	/** The cookie of the twitter account, which is used to authenticate against twitter. */
-	cookie?: string;
+	cookies?: string;
 
 	/** The types of credential. */
 	credentialType?: ECredentialType;
@@ -36,27 +34,33 @@ export class AuthCredential implements IAuthCredential {
 	/**
 	 * Generates a new AuthCredentials using the given credentials.
 	 *
-	 * @param cookie The cookie to be used for authenticating against Twitter.
+	 * @param cookies The list of cookie strings to be used for authenticating against Twitter.
 	 * @param guestToken The guest token to be used to authenticate a guest session.
 	 */
-	constructor(cookie?: AuthCookie, guestToken?: string) {
+	constructor(cookies?: string[], guestToken?: string) {
 		this.authToken =
 			'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 		// If guest credentials given
-		if (!cookie && guestToken) {
+		if (!cookies && guestToken) {
 			this.guestToken = guestToken;
 			this.credentialType = ECredentialType.GUEST;
 		}
 		// If login credentials given
-		else if (cookie && guestToken) {
-			this.cookie = cookie.toString();
+		else if (cookies && guestToken) {
+			// Parsing the cookies
+			const parsedCookie: AuthCookie = new AuthCookie(cookies);
+
+			this.cookies = parsedCookie.toString();
 			this.guestToken = guestToken;
 			this.credentialType = ECredentialType.LOGIN;
 		}
 		// If user credentials given
-		else if (cookie && !guestToken) {
-			this.cookie = cookie.toString();
-			this.csrfToken = cookie.ct0;
+		else if (cookies && !guestToken) {
+			// Parsing the cookies
+			const parsedCookie: AuthCookie = new AuthCookie(cookies);
+
+			this.cookies = parsedCookie.toString();
+			this.csrfToken = parsedCookie.ct0;
 			this.credentialType = ECredentialType.USER;
 		}
 	}

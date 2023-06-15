@@ -12,7 +12,6 @@ import { Root as ILoginSubtaskResponse } from '../types/response/LoginSubtask';
 import { AuthCredential } from '../models/AuthCredential';
 import { AccountCredential } from '../models/AccountCredential';
 import { LoginSubtaskPayload } from '../models/request/payloads/LoginSubtask';
-import { AuthCookie } from '../models/AuthCookie';
 import { EAuthenticationErrors } from '../enums/Errors';
 
 /**
@@ -194,7 +193,7 @@ export class AuthService {
 
 					// If this is the last subtask, namely ACCOUNT_DUPLICATION_CHECK, setting the AuthCredentials
 					if (this.subtasks[i] == ELoginSubtasks.ACCOUNT_DUPLICATION_CHECK) {
-						this.cred = new AuthCredential(new AuthCookie(res.headers['set-cookie'] as string[]));
+						this.cred = new AuthCredential(res.headers['set-cookie'] as string[]);
 					}
 				})
 				/**
