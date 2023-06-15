@@ -142,7 +142,7 @@ export class Auth {
 	}
 
 	/**
-	 * Fetches the credentials for uses authentication, from Twitter API.
+	 * Fetches the credentials for user authentication, from Twitter API.
 	 *
 	 * @param accCred The credentials (email, username and password) to the Twitter account.
 	 * @returns The credentials containing the authenticated tokens.
