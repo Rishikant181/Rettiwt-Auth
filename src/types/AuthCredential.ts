@@ -1,5 +1,5 @@
 // ENUMS
-import { ECredentialType } from '../enums/Authentication';
+import { EAuthenticationType } from '../enums/Authentication';
 
 /**
  * The credentials for authenticating against Twitter.
@@ -25,5 +25,5 @@ export interface IAuthCredential {
 	cookie?: string;
 
 	/** The types of credential. */
-	credentialType?: ECredentialType;
+	authenticationType?: EAuthenticationType;
 }

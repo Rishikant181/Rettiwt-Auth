@@ -1,6 +1,5 @@
 // ENUMS
-export { ECredentialType } from './enums/Authentication';
-export { EAuthenticationErrors } from './enums/Errors';
+export { EAuthenticationType, EAuthenticationErrors } from './enums/Authentication';
 
 // MODELS
 export { AccountCredential } from './models/AccountCredential';

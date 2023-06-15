@@ -1,5 +1,5 @@
 // ENUMS
-import { ECredentialType } from '../enums/Authentication';
+import { EAuthenticationType } from '../enums/Authentication';
 
 // TYPES
 import { IAuthCredential } from '../types/AuthCredential';
@@ -32,7 +32,7 @@ export class AuthCredential implements IAuthCredential {
 	cookies?: string;
 
 	/** The types of credential. */
-	credentialType?: ECredentialType;
+	authenticationType?: EAuthenticationType;
 
 	/**
 	 * Generates a new AuthCredentials using the given credentials.
@@ -46,7 +46,7 @@ export class AuthCredential implements IAuthCredential {
 		// If guest credentials given
 		if (!cookies && guestToken) {
 			this.guestToken = guestToken;
-			this.credentialType = ECredentialType.GUEST;
+			this.authenticationType = EAuthenticationType.GUEST;
 		}
 		// If login credentials given
 		else if (cookies && guestToken) {
@@ -55,7 +55,7 @@ export class AuthCredential implements IAuthCredential {
 
 			this.cookies = parsedCookie.toString();
 			this.guestToken = guestToken;
-			this.credentialType = ECredentialType.LOGIN;
+			this.authenticationType = EAuthenticationType.LOGIN;
 		}
 		// If user credentials given
 		else if (cookies && !guestToken) {
@@ -64,7 +64,7 @@ export class AuthCredential implements IAuthCredential {
 
 			this.cookies = parsedCookie.toString();
 			this.csrfToken = parsedCookie.ct0;
-			this.credentialType = ECredentialType.USER;
+			this.authenticationType = EAuthenticationType.USER;
 		}
 	}
 

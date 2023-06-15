@@ -2,7 +2,7 @@
 import axios, { AxiosError } from 'axios';
 
 // ENUMS
-import { ELoginSubtasks } from './enums/Login';
+import { ELoginUrls, ELoginSubtasks } from './enums/Login';
 
 // TYPES
 import { Root as IGuestTokenResponse } from './types/response/GuestToken';
@@ -12,7 +12,7 @@ import { Root as ILoginSubtaskResponse } from './types/response/LoginSubtask';
 import { AuthCredential } from './models/AuthCredential';
 import { AccountCredential } from './models/AccountCredential';
 import { LoginSubtaskPayload } from './models/request/payloads/LoginSubtask';
-import { EAuthenticationErrors } from './enums/Errors';
+import { EAuthenticationErrors } from './enums/Authentication';
 
 /**
  * A class that deals with authenticating against Twitter API.
@@ -106,7 +106,7 @@ export class Auth {
 	 */
 	private async initiateLogin(): Promise<void> {
 		await axios
-			.post<ILoginSubtaskResponse>('https://api.twitter.com/1.1/onboarding/task.json?flow_name=login', null, {
+			.post<ILoginSubtaskResponse>(ELoginUrls.INITIATE_LOGIN, null, {
 				headers: { ...this.cred.toHeader() },
 			})
 			.then((res) => {
@@ -131,7 +131,7 @@ export class Auth {
 
 		// Getting the guest token
 		await axios
-			.post<IGuestTokenResponse>('https://api.twitter.com/1.1/guest/activate.json', null, {
+			.post<IGuestTokenResponse>(ELoginUrls.GUEST_TOKEN, null, {
 				headers: { ...cred.toHeader() },
 			})
 			.then((res) => {
@@ -163,7 +163,7 @@ export class Auth {
 
 			// Executing the subtask
 			await axios
-				.post<ILoginSubtaskResponse>('https://api.twitter.com/1.1/onboarding/task.json', payload, {
+				.post<ILoginSubtaskResponse>(ELoginUrls.LOGIN_SUBTASK, payload, {
 					headers: { ...this.cred.toHeader() },
 				})
 				.then((res) => {
