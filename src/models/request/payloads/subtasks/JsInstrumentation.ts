@@ -3,6 +3,8 @@ import { IJsInstrumentationInput } from '../../../../types/request/payloads/subt
 
 /**
  * The input for obtaining the various login options available.
+ * 
+ * @internal
  */
 export class JsInstrumentationInput implements IJsInstrumentationInput {
 	response: string;

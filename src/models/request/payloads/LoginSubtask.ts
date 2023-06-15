@@ -13,6 +13,8 @@ import { AccountDuplicationCheckInput } from './subtasks/AccountDuplicationCheck
 
 /**
  * The payload to be sent for each login subtask.
+ * 
+ * @internal
  */
 export class LoginSubtaskPayload implements ILoginSubtaskPayload {
 	/* eslint-disable */
@@ -33,6 +35,8 @@ export class LoginSubtaskPayload implements ILoginSubtaskPayload {
 
 /**
  * The subtask input according to the type of subtask to be executed.
+ * 
+ * @internal
  */
 class LoginSubtaskInput implements ILoginSubtaskInput {
 	/* eslint-disable */

@@ -7,7 +7,7 @@ import { IAuthCookie } from '../types/AuthCookie';
 /**
  * The cookie containing the tokens that are used to authenticate against Twitter.
  *
- * @public
+ * @internal
  */
 export class AuthCookie implements IAuthCookie {
 	/* eslint-disable */
