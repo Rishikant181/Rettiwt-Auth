@@ -18,7 +18,7 @@ export interface IAuthCredential {
 	/** The guest token provided by Twitter API. */
 	guestToken?: string;
 
-	/** The guest token. */
+	/** The csrf token for the session. */
 	csrfToken?: string;
 
 	/** The cookie of the twitter account, which is used to authenticate against twitter. */

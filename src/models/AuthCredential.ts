@@ -3,7 +3,10 @@ import { ECredentialType } from '../enums/Authentication';
 
 // TYPES
 import { IAuthCredential } from '../types/AuthCredential';
+
+// MODELS
 import { AuthCookie } from './AuthCookie';
+import { AuthHeader } from './AuthHeader';
 
 /**
  * The credentials for authenticating against Twitter.
@@ -22,7 +25,7 @@ export class AuthCredential implements IAuthCredential {
 	/** The guest token provided by Twitter API. */
 	guestToken?: string;
 
-	/** The guest token. */
+	/** The csrf token for the session. */
 	csrfToken?: string;
 
 	/** The cookie of the twitter account, which is used to authenticate against twitter. */
@@ -63,5 +66,12 @@ export class AuthCredential implements IAuthCredential {
 			this.csrfToken = parsedCookie.ct0;
 			this.credentialType = ECredentialType.USER;
 		}
+	}
+
+	/**
+	 * @returns 'this' object's equivalent HTTP header representation.
+	 */
+	toHeader(): AuthHeader {
+		return new AuthHeader(this);
 	}
 }
