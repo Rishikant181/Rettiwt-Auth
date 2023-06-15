@@ -1,5 +1,5 @@
 // PACKAGES
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 // ENUMS
 import { ELoginSubtasks } from '../enums/Login';
@@ -13,6 +13,7 @@ import { AuthCredential } from '../models/AuthCredential';
 import { AccountCredential } from '../models/AccountCredential';
 import { LoginSubtaskPayload } from '../models/request/payloads/LoginSubtask';
 import { AuthCookie } from '../models/AuthCookie';
+import { EAuthenticationErrors } from '../enums/Errors';
 
 /**
  * A class that deals with authenticating against Twitter API.
@@ -65,6 +66,36 @@ export class AuthService {
 		} else {
 			return new LoginSubtaskPayload(subtask, flowToken);
 		}
+	}
+
+	/**
+	 * Parses the incoming authentication error from Twitter API into a simplified message.
+	 * 
+	 * @param error The incoming error.
+	 * @param flowName The flow that was executed, which raised this error.
+	 * @returns The simplified error message.
+	 */
+	private parseAuthError(error: AxiosError<ILoginSubtaskResponse>, flowName: ELoginSubtasks): EAuthenticationErrors {
+		/** The error message to throw. */
+		let errorMessage: EAuthenticationErrors = EAuthenticationErrors.AUTHENTICATION_FAILED;
+
+		// If there is any error related to login
+		if (error.response?.data.errors[0].code == 399) {
+			// If email error
+			if (flowName == ELoginSubtasks.ENTER_USER_IDENTIFIER) {
+				errorMessage = EAuthenticationErrors.INVALID_EMAIL;
+			}
+			// If username error
+			else if (flowName == ELoginSubtasks.ENTER_ALTERNATE_USER_IDENTIFIER) {
+				errorMessage = EAuthenticationErrors.INVALID_USERNAME;
+			}
+			// If password error
+			else if (flowName == ELoginSubtasks.ENTER_PASSWORD) {
+				errorMessage = EAuthenticationErrors.INVALID_PASSWORD;
+			}
+		}
+
+		return errorMessage;
 	}
 
 	/**
@@ -165,6 +196,14 @@ export class AuthService {
 					if (this.subtasks[i] == ELoginSubtasks.ACCOUNT_DUPLICATION_CHECK) {
 						this.cred = new AuthCredential(new AuthCookie(res.headers['set-cookie'] as string[]));
 					}
+				})
+				/**
+				 * Catching any error that might have arised in the authentication process.
+				 * 
+				 * Then parsing that error to generate a simplified error message, which is then thrown.
+				 */
+				.catch((err: AxiosError<ILoginSubtaskResponse>) => {
+					throw new Error(this.parseAuthError(err, this.subtasks[i]));
 				});
 		}
 
