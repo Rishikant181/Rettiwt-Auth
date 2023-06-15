@@ -41,6 +41,12 @@ The following are the two types of authentcation methods available:
 
 ---
 
+## Additional information
+
+To learn more, please refer to the full documentation of the [Auth](https://rishikant181.github.io/Rettiwt-Auth/classes/Auth.html) class.
+
+---
+
 ## Getting started
 
 The following examples will help you to get started with using the library:
@@ -79,3 +85,5 @@ Where,
 -   account_username is the username associated with your Twitter account.
 -   account_password is the password to your Twitter account.
 -   credential is the generated user credential.
+
+---
