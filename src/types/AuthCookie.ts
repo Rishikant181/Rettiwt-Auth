@@ -4,6 +4,7 @@
  * @public
  */
 export interface IAuthCookie {
+	/* eslint-disable */
 	/** Token used to authenticate a device. */
 	kdt: string;
 
@@ -15,4 +16,5 @@ export interface IAuthCookie {
 
 	/** The authentication token used while logging in to the account. */
 	auth_token: string;
+	/* eslint-enable */
 }

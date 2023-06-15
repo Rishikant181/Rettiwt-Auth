@@ -24,16 +24,12 @@ export class AuthService {
 	/** The current auth credentials. */
 	private cred: AuthCredential;
 
-	/** The current cookies */
-	private cookies: string[];
-
 	/** The order in which the login subtasks must be executed. */
 	private subtasks: ELoginSubtasks[];
 
 	constructor() {
 		this.flowToken = '';
 		this.cred = new AuthCredential();
-		this.cookies = [];
 		this.subtasks = [
 			ELoginSubtasks.JS_INSTRUMENTATION,
 			ELoginSubtasks.ENTER_USER_IDENTIFIER,
@@ -69,7 +65,7 @@ export class AuthService {
 
 	/**
 	 * Parses the incoming authentication error from Twitter API into a simplified message.
-	 * 
+	 *
 	 * @param error The incoming error.
 	 * @param flowName The flow that was executed, which raised this error.
 	 * @returns The simplified error message.
@@ -103,16 +99,14 @@ export class AuthService {
 	private async initiateLogin(): Promise<void> {
 		await axios
 			.post<ILoginSubtaskResponse>('https://api.twitter.com/1.1/onboarding/task.json?flow_name=login', null, {
-				headers: {
-					/* eslint-disable */
-					'Authorization': `Bearer ${this.cred.authToken as string}`,
-					'x-guest-token': this.cred.guestToken,
-					/* eslint-enable */
-				},
+				headers: { ...this.cred.toHeader() },
 			})
 			.then((res) => {
+				// Setting the flow token
 				this.flowToken = res.data.flow_token;
-				this.cookies = res.headers['set-cookie'] as string[];
+
+				// Setting the cookie string of the auth credentials
+				this.cred.cookies = (res.headers['set-cookie'] as string[]).join(';');
 			});
 	}
 
@@ -128,11 +122,7 @@ export class AuthService {
 		// Getting the guest token
 		await axios
 			.post<IGuestTokenResponse>('https://api.twitter.com/1.1/guest/activate.json', null, {
-				headers: {
-					/* eslint-disable */
-					Authorization: `Bearer ${cred.authToken as string}`,
-					/* eslint-enable */
-				},
+				headers: { ...cred.toHeader() },
 			})
 			.then((res) => {
 				cred.guestToken = res.data.guest_token;
@@ -162,13 +152,7 @@ export class AuthService {
 			// Executing the subtask
 			await axios
 				.post<ILoginSubtaskResponse>('https://api.twitter.com/1.1/onboarding/task.json', payload, {
-					headers: {
-						/* eslint-disable */
-						'Authorization': `Bearer ${this.cred.authToken as string}`,
-						'x-guest-token': this.cred.guestToken,
-						'Cookie': this.cookies.join(';'),
-						/* eslint-enable */
-					},
+					headers: { ...this.cred.toHeader() },
 				})
 				.then((res) => {
 					/**
@@ -198,7 +182,7 @@ export class AuthService {
 				})
 				/**
 				 * Catching any error that might have arised in the authentication process.
-				 * 
+				 *
 				 * Then parsing that error to generate a simplified error message, which is then thrown.
 				 */
 				.catch((err: AxiosError<ILoginSubtaskResponse>) => {
