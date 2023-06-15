@@ -2,24 +2,24 @@
 import axios, { AxiosError } from 'axios';
 
 // ENUMS
-import { ELoginSubtasks } from '../enums/Login';
+import { ELoginSubtasks } from './enums/Login';
 
 // TYPES
-import { Root as IGuestTokenResponse } from '../types/response/GuestToken';
-import { Root as ILoginSubtaskResponse } from '../types/response/LoginSubtask';
+import { Root as IGuestTokenResponse } from './types/response/GuestToken';
+import { Root as ILoginSubtaskResponse } from './types/response/LoginSubtask';
 
 // MODELS
-import { AuthCredential } from '../models/AuthCredential';
-import { AccountCredential } from '../models/AccountCredential';
-import { LoginSubtaskPayload } from '../models/request/payloads/LoginSubtask';
-import { EAuthenticationErrors } from '../enums/Errors';
+import { AuthCredential } from './models/AuthCredential';
+import { AccountCredential } from './models/AccountCredential';
+import { LoginSubtaskPayload } from './models/request/payloads/LoginSubtask';
+import { EAuthenticationErrors } from './enums/Errors';
 
 /**
  * A class that deals with authenticating against Twitter API.
  * 
  * @public
  */
-export class AuthService {
+export class Auth {
 	/** The current flow token. */
 	private flowToken: string;
 

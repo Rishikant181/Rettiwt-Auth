@@ -8,7 +8,7 @@ export { AuthCredential } from './models/AuthCredential';
 export { AuthHeader } from './models/AuthHeader';
 
 // SERVICES
-export { AuthService as Auth } from './services/AuthService';
+export { Auth } from './Auth';
 
 // TYPES
 export { IAccountCredential } from './types/AccountCredential';
