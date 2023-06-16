@@ -16,7 +16,7 @@ import { EAuthenticationErrors } from './enums/Authentication';
 
 /**
  * A class that deals with authenticating against Twitter API.
- * 
+ *
  * @public
  */
 export class Auth {
@@ -48,7 +48,7 @@ export class Auth {
 	 * @param flowToken The flow token for the subtask.
 	 * @param accCred The account credentials to the Twitter account.
 	 * @returns The requried payload.
-	 * 
+	 *
 	 * @internal
 	 */
 	private getSubtaskPayload(
@@ -73,7 +73,7 @@ export class Auth {
 	 * @param error The incoming error.
 	 * @param flowName The flow that was executed, which raised this error.
 	 * @returns The simplified error message.
-	 * 
+	 *
 	 * @internal
 	 */
 	private parseAuthError(error: AxiosError<ILoginSubtaskResponse>, flowName: ELoginSubtasks): EAuthenticationErrors {
@@ -101,7 +101,7 @@ export class Auth {
 
 	/**
 	 * Initiates the login process and gets the required flow token and cookies for the login process.
-	 * 
+	 *
 	 * @internal
 	 */
 	private async initiateLogin(): Promise<void> {
@@ -122,7 +122,7 @@ export class Auth {
 	 * Fetches a guest token, for guest authentication, from Twitter API.
 	 *
 	 * @returns The credentials containing the guest token.
-	 * 
+	 *
 	 * @public
 	 */
 	async getGuestCredential(): Promise<AuthCredential> {
@@ -146,7 +146,7 @@ export class Auth {
 	 *
 	 * @param accCred The credentials (email, username and password) to the Twitter account.
 	 * @returns The credentials containing the authenticated tokens.
-	 * 
+	 *
 	 * @public
 	 */
 	async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {

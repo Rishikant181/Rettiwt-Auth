@@ -3,7 +3,7 @@ import { IAccountDuplicationCheck } from '../../../../types/request/payloads/sub
 
 /**
  * The input data to be sent for checking account duplication.
- * 
+ *
  * @internal
  */
 export class AccountDuplicationCheckInput implements IAccountDuplicationCheck {

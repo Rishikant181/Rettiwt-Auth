@@ -1,6 +1,6 @@
 /**
  * The credentials of the Twitter account to be logged into.
- * 
+ *
  * @public
  */
 export interface IAccountCredential {

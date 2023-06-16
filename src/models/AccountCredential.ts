@@ -3,7 +3,7 @@ import { IAccountCredential } from '../types/AccountCredential';
 
 /**
  * The credentials of the Twitter account to be logged into.
- * 
+ *
  * @public
  */
 export class AccountCredential implements IAccountCredential {

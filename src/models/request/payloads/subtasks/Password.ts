@@ -3,7 +3,7 @@ import { IPasswordInput } from '../../../../types/request/payloads/subtasks/Pass
 
 /**
  * The input data to be sent for logging in using password.
- * 
+ *
  * @internal
  */
 export class PasswordInput implements IPasswordInput {

@@ -3,7 +3,7 @@ import { IAlternateUserIdentifierInput } from '../../../../types/request/payload
 
 /**
  * The input data to be sent alternate user identification.
- * 
+ *
  * @internal
  */
 export class AlternateUserIdentifierInput implements IAlternateUserIdentifierInput {

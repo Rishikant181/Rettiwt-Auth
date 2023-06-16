@@ -1,6 +1,6 @@
 /**
  * The different types of authentication for authenticating against Twitter.
- * 
+ *
  * @public
  */
 export enum EAuthenticationType {
@@ -8,7 +8,6 @@ export enum EAuthenticationType {
 	USER = 'USER',
 	LOGIN = 'LOGIN',
 }
-
 
 /**
  * Different types of error messages related to authentication returned by services.

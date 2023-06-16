@@ -8,7 +8,7 @@ import {
 
 /**
  * The input data to be sent for identifying the user using email, phone, etc.
- * 
+ *
  * @internal
  */
 export class UserIdentifierInput implements IUserIdentifierInput {
