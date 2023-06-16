@@ -1,8 +1,9 @@
 {
 	"name": "rettiwt-auth",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A library for authenticating aagainst Twitter API",
-	"main": "index.js",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"build": "tsc",
 		"lint": "eslint .",
