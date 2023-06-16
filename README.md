@@ -87,3 +87,13 @@ Where,
 -   credential is the generated user credential.
 
 ---
+
+## Authenticating against Twitter API
+
+After the credentials have been generated:
+
+1.  Generate the credential using any one of the two methods given above.
+2.  Use the [toHeader()](https://rishikant181.github.io/Rettiwt-Auth/classes/AuthCredential.html#toHeader) method on the returned credential, which converts the credential into HTTP headers.
+3.  Add the returned HTTP headers to the headers of the requests made to Twitter API.
+
+---
