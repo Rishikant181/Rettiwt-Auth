@@ -27,17 +27,18 @@ Before getting started, it is important to know what are the different authentca
 
 The following are the two types of authentcation methods available:
 
-1. **Guest Authentication**, with which, the following data can be accessed:
+1. **Guest Authentication**, with which, the following can be achieved:
+    - Initiation of login process
+2. **User Authentication**, with which, the following data can be accessed:
     - Tweet Details
-    - User Details
-    - User Tweets
-2. **User Authentication**, with which, the following data, in addition to guest, can be accessed:
     - Tweet Likes
     - Tweet Retweets
     - Tweet Search
+    - User Details
     - User Followers
     - User Following
     - User Likes
+    - User Tweets
 
 ---
 
