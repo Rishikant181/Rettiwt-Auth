@@ -98,3 +98,24 @@ After the credentials have been generated:
 3.  Add the returned HTTP headers to the headers of the requests made to Twitter API.
 
 ---
+
+## CLI Usage
+
+You may also use it from the CLI, without using library functions. This is the recommended approach when using this with [Rettiwt-API](https://www.npmjs.com/package/rettiwt-api) for fetching data from Twitter. To login:
+
+-   Install the package globally using the command:  
+    `npm -g install rettiwt-auth`  
+    **or**  
+    `yarn global add rettiwt-auth`
+-   Open a commandline/shell and use the command:  
+    `login <email> <username> <password>`
+
+Where,
+
+-   \<email\> is the email to the Twitter account.
+-   \<username\> is the username associated with the Twitter account.
+-   \<password\> is the password to the Twitter account.
+
+The generated credentials can then be used to authenticate requests to Twitter by passing in the respective headers.
+
+---
