@@ -1,4 +1,3 @@
 dist/
-src/types/request/
-src/types/response/
 node_modules/
+docs/
