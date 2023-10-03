@@ -7,9 +7,9 @@ import { IAccountDuplicationCheck } from '../../../../types/request/payloads/sub
  * @internal
  */
 export class AccountDuplicationCheckInput implements IAccountDuplicationCheck {
-	link: string;
+	public link: string;
 
-	constructor() {
+	public constructor() {
 		this.link = 'AccountDuplicationCheck_false';
 	}
 }

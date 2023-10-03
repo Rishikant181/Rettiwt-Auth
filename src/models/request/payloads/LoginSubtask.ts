@@ -27,7 +27,7 @@ export class LoginSubtaskPayload implements ILoginSubtaskPayload {
 	 * @param flowToken The flow token for the subtask to be executed.
 	 * @param inputText The input string data to be sent in payload.
 	 */
-	constructor(subtaskId: ELoginSubtasks, flowToken: string, inputText?: string) {
+	public constructor(subtaskId: ELoginSubtasks, flowToken: string, inputText?: string) {
 		this.flow_token = flowToken;
 		this.subtask_inputs = [new LoginSubtaskInput(subtaskId, inputText)];
 	}
@@ -52,7 +52,7 @@ class LoginSubtaskInput implements ILoginSubtaskInput {
 	 * @param subtaskId The id of the subtask to be executed.
 	 * @param inputText The input string data to be sent.
 	 */
-	constructor(subtaskId: ELoginSubtasks, inputText?: string) {
+	public constructor(subtaskId: ELoginSubtasks, inputText?: string) {
 		this.subtask_id = subtaskId;
 
 		// Initializing appropriate subtask input according to subtaskId

@@ -29,7 +29,7 @@ export class Auth {
 	/** The order in which the login subtasks must be executed. */
 	private subtasks: ELoginSubtasks[];
 
-	constructor() {
+	public constructor() {
 		this.flowToken = '';
 		this.cred = new AuthCredential();
 		this.subtasks = [
@@ -125,7 +125,7 @@ export class Auth {
 	 *
 	 * @public
 	 */
-	async getGuestCredential(): Promise<AuthCredential> {
+	public async getGuestCredential(): Promise<AuthCredential> {
 		// Creating a new blank credential
 		const cred: AuthCredential = new AuthCredential();
 
@@ -149,7 +149,7 @@ export class Auth {
 	 *
 	 * @public
 	 */
-	async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
+	public async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
 		// Creating a new guest credential
 		this.cred = await this.getGuestCredential();
 

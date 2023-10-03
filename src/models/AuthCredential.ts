@@ -20,19 +20,19 @@ import { AuthHeader } from './AuthHeader';
  */
 export class AuthCredential implements IAuthCredential {
 	/** The bearer token from twitter.com. */
-	authToken?: string;
+	public authToken?: string;
 
 	/** The guest token provided by Twitter API. */
-	guestToken?: string;
+	public guestToken?: string;
 
 	/** The csrf token for the session. */
-	csrfToken?: string;
+	public csrfToken?: string;
 
 	/** The cookie of the twitter account, which is used to authenticate against twitter. */
-	cookies?: string;
+	public cookies?: string;
 
 	/** The types of credential. */
-	authenticationType?: EAuthenticationType;
+	public authenticationType?: EAuthenticationType;
 
 	/**
 	 * Generates a new AuthCredentials using the given credentials.
@@ -40,7 +40,7 @@ export class AuthCredential implements IAuthCredential {
 	 * @param cookies The list of cookie strings to be used for authenticating against Twitter.
 	 * @param guestToken The guest token to be used to authenticate a guest session.
 	 */
-	constructor(cookies?: string[], guestToken?: string) {
+	public constructor(cookies?: string[], guestToken?: string) {
 		this.authToken =
 			'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
 		// If guest credentials given
@@ -71,7 +71,7 @@ export class AuthCredential implements IAuthCredential {
 	/**
 	 * @returns 'this' object's equivalent HTTP header representation.
 	 */
-	toHeader(): AuthHeader {
+	public toHeader(): AuthHeader {
 		return new AuthHeader(this);
 	}
 }

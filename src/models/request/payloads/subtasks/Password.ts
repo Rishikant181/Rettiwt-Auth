@@ -7,13 +7,13 @@ import { IPasswordInput } from '../../../../types/request/payloads/subtasks/Pass
  * @internal
  */
 export class PasswordInput implements IPasswordInput {
-	password: string;
-	link: string;
+	public password: string;
+	public link: string;
 
 	/**
 	 * @param password The password to the Twitter account.
 	 */
-	constructor(password: string) {
+	public constructor(password: string) {
 		this.password = password;
 		this.link = 'next_link';
 	}

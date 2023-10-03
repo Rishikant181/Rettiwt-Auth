@@ -29,7 +29,7 @@ export class AuthHeader implements IAuthHeader {
 	 *
 	 * @param cred The AuthCredential from which to generate headers.
 	 */
-	'constructor'(cred: AuthCredential) {
+	public 'constructor'(cred: AuthCredential) {
 		/**
 		 * Conditionally initializing only those data which are supplied.
 		 *

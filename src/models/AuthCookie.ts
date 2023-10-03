@@ -29,7 +29,7 @@ export class AuthCookie implements IAuthCookie {
 	 *
 	 * @param cookieStr The cookie string list obtained from set-cookie header.
 	 */
-	constructor(cookieStr: string[]) {
+	public constructor(cookieStr: string[]) {
 		// Storing the cookies in cookie jar
 		const cookies: Cookie[] = new CookieJar().setCookies(cookieStr);
 
@@ -50,7 +50,7 @@ export class AuthCookie implements IAuthCookie {
 	/**
 	 * Converts 'this' object to it's string representation.
 	 */
-	toString(): string {
+	public toString(): string {
 		/** The string representation of 'this' object. */
 		let outStr: string = '';
 
