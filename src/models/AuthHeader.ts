@@ -10,19 +10,19 @@ import { AuthCredential } from './AuthCredential';
  * @public
  */
 export class AuthHeader implements IAuthHeader {
-	/* eslint-disable */
+	/* eslint-disable @typescript-eslint/naming-convention */
 	/** The bearer token from twitter.com. */
-	'authorization'?: string;
+	public 'authorization'?: string;
 
 	/** The guest token provided by Twitter API. */
-	'x-guest-token'?: string;
+	public 'x-guest-token'?: string;
 
 	/** The csrf token for the session. */
-	'x-csrf-token'?: string;
+	public 'x-csrf-token'?: string;
 
 	/** The cookie of the twitter account, which is used to authenticate against twitter. */
-	'cookie'?: string;
-	/* eslint-enable */
+	public 'cookie'?: string;
+	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
 	 * Creates a new instance from the given AuthCredential object.

@@ -17,10 +17,10 @@ import { AccountDuplicationCheckInput } from './subtasks/AccountDuplicationCheck
  * @internal
  */
 export class LoginSubtaskPayload implements ILoginSubtaskPayload {
-	/* eslint-disable */
-	flow_token: string;
-	subtask_inputs: LoginSubtaskInput[];
-	/* eslint-enable */
+	/* eslint-disable @typescript-eslint/naming-convention */
+	public flow_token: string;
+	public subtask_inputs: LoginSubtaskInput[];
+	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
 	 * @param subtaskId The id of the subtask to be executed.
@@ -39,14 +39,14 @@ export class LoginSubtaskPayload implements ILoginSubtaskPayload {
  * @internal
  */
 class LoginSubtaskInput implements ILoginSubtaskInput {
-	/* eslint-disable */
-	subtask_id: string;
-	js_instrumentation?: JsInstrumentationInput;
-	settings_list?: UserIdentifierInput;
-	enter_text?: AlternateUserIdentifierInput;
-	enter_password?: PasswordInput;
-	check_logged_in_account?: AccountDuplicationCheckInput;
-	/* eslint-enable */
+	/* eslint-disable @typescript-eslint/naming-convention */
+	public subtask_id: string;
+	public js_instrumentation?: JsInstrumentationInput;
+	public settings_list?: UserIdentifierInput;
+	public enter_text?: AlternateUserIdentifierInput;
+	public enter_password?: PasswordInput;
+	public check_logged_in_account?: AccountDuplicationCheckInput;
+	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
 	 * @param subtaskId The id of the subtask to be executed.
