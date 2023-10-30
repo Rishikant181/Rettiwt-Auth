@@ -11,7 +11,7 @@ export class PasswordInput implements IPasswordInput {
 	public link: string;
 
 	/**
-	 * @param password The password to the Twitter account.
+	 * @param password - The password to the Twitter account.
 	 */
 	public constructor(password: string) {
 		this.password = password;

@@ -27,7 +27,7 @@ export class AuthHeader implements IAuthHeader {
 	/**
 	 * Creates a new instance from the given AuthCredential object.
 	 *
-	 * @param cred The AuthCredential from which to generate headers.
+	 * @param cred - The AuthCredential from which to generate headers.
 	 */
 	public 'constructor'(cred: AuthCredential) {
 		/**

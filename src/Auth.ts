@@ -44,9 +44,9 @@ export class Auth {
 	/**
 	 * Generates the apporpriate payload for the given login subtask and given data.
 	 *
-	 * @param subtask The name of the subtask.
-	 * @param flowToken The flow token for the subtask.
-	 * @param accCred The account credentials to the Twitter account.
+	 * @param subtask - The name of the subtask.
+	 * @param flowToken - The flow token for the subtask.
+	 * @param accCred - The account credentials to the Twitter account.
 	 * @returns The requried payload.
 	 *
 	 * @internal
@@ -70,8 +70,8 @@ export class Auth {
 	/**
 	 * Parses the incoming authentication error from Twitter API into a simplified message.
 	 *
-	 * @param error The incoming error.
-	 * @param flowName The flow that was executed, which raised this error.
+	 * @param error - The incoming error.
+	 * @param flowName - The flow that was executed, which raised this error.
 	 * @returns The simplified error message.
 	 *
 	 * @internal
@@ -144,7 +144,7 @@ export class Auth {
 	/**
 	 * Fetches the credentials for user authentication, from Twitter API.
 	 *
-	 * @param accCred The credentials (email, username and password) to the Twitter account.
+	 * @param accCred - The credentials (email, username and password) to the Twitter account.
 	 * @returns The credentials containing the authenticated tokens.
 	 *
 	 * @public

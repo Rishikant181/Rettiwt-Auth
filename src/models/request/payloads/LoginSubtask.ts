@@ -23,9 +23,9 @@ export class LoginSubtaskPayload implements ILoginSubtaskPayload {
 	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
-	 * @param subtaskId The id of the subtask to be executed.
-	 * @param flowToken The flow token for the subtask to be executed.
-	 * @param inputText The input string data to be sent in payload.
+	 * @param subtaskId - The id of the subtask to be executed.
+	 * @param flowToken - The flow token for the subtask to be executed.
+	 * @param inputText - The input string data to be sent in payload.
 	 */
 	public constructor(subtaskId: ELoginSubtasks, flowToken: string, inputText?: string) {
 		this.flow_token = flowToken;
@@ -49,8 +49,8 @@ class LoginSubtaskInput implements ILoginSubtaskInput {
 	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
-	 * @param subtaskId The id of the subtask to be executed.
-	 * @param inputText The input string data to be sent.
+	 * @param subtaskId - The id of the subtask to be executed.
+	 * @param inputText - The input string data to be sent.
 	 */
 	public constructor(subtaskId: ELoginSubtasks, inputText?: string) {
 		this.subtask_id = subtaskId;

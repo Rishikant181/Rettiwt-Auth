@@ -9,8 +9,11 @@ const userName: string = process.argv[3];
 const password: string = process.argv[4];
 
 // Logging in and returning the credentials
-new Auth().getUserCredential({
-    email: email,
-    userName: userName,
-    password: password
-}).then(res => console.log(res.toHeader())).catch(err => console.log(err));
+new Auth()
+	.getUserCredential({
+		email: email,
+		userName: userName,
+		password: password,
+	})
+	.then((res) => console.log(res.toHeader()))
+	.catch((err) => console.log(err));

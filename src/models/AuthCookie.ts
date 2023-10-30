@@ -27,7 +27,7 @@ export class AuthCookie implements IAuthCookie {
 	/**
 	 * Creates a new AuthCookie object from the given cookie string.
 	 *
-	 * @param cookieStr The cookie string list obtained from set-cookie header.
+	 * @param cookieStr - The cookie string list obtained from set-cookie header.
 	 */
 	public constructor(cookieStr: string[]) {
 		// Storing the cookies in cookie jar

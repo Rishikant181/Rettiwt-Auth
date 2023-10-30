@@ -11,7 +11,7 @@ export class AlternateUserIdentifierInput implements IAlternateUserIdentifierInp
 	public link: string;
 
 	/**
-	 * @param userName The username associated with the Twitter account.
+	 * @param userName - The username associated with the Twitter account.
 	 */
 	public constructor(userName: string) {
 		this.text = userName;

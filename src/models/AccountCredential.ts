@@ -19,7 +19,7 @@ export class AccountCredential implements IAccountCredential {
 	/**
 	 * Initializes a new AccountCredential instance.
 	 *
-	 * @param cred The credentials to the Twitter account.
+	 * @param cred - The credentials to the Twitter account.
 	 */
 	public constructor(cred: AccountCredential) {
 		this.email = cred.email;
