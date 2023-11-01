@@ -38,11 +38,7 @@ The following are the two types of authentcation methods available, with each me
 
 This package is intended to be used for authenticating [Rettiwt-API](https://www.npmjs.com/package/rettiwt-api) for fetching data from Twitter. To login and generate the API key:
 
-1.  Install the package globally using the command:  
-    `npm -g install rettiwt-auth`  
-    **or**  
-    `yarn global add rettiwt-auth`
-
+1.  Install the package globally by following the steps in the 'Installation' section.
 2.  Open a commandline/shell and use the command:  
     `login <email> <username> <password>`
 
