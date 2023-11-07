@@ -11,10 +11,10 @@ export interface IAuthCookie {
 	/** Token used to authenticate a user using a Twitter ID. */
 	twid: string;
 
-	/** The CSRF token of the session. */
+	/** The CSRF token for the session. */
 	ct0: string;
 
-	/** The authentication token used while logging in to the account. */
+	/** The bearer token from twitter.com. */
 	auth_token: string;
 	/* eslint-enable */
 }
