@@ -18,18 +18,14 @@ import { EAuthenticationErrors } from './enums/Authentication';
  * This class deals with authenticating against Twitter API.
  *
  * There are two authentication methods available:
- * 1. Guest Authentication
- * 2. User Authentication
+ * 1. **Guest Authentication:**
+ * This type of authentication does not require a Twitter account.
+ * However, it offers limited functionality.
+ * Use the {@link Auth.getGuestCredential} method to authenticate as a guest.
  *
- * **Guest Authentication:**
- * - Allows access only to a limited set of resources,
- * - Does not require a Twitter account.
- * - Done using the {@link Auth.getGuestCredential} method.
- *
- * **User Authentication:**
- * - Allows access only to all resources,
- * - Requires a working Twitter account.
- * - Done using the {@link Auth.getUserCredential} method.
+ * 2. **User Authentication:**
+ * This type of authentication requires a working Twitter account and offers a wider range of functionality.
+ * Use the {@link Auth.getUserCredential} method to authenticate as a logged-in user.
  *
  * @public
  */
@@ -138,9 +134,9 @@ export class Auth {
 	}
 
 	/**
-	 * Fetches a guest token, for guest authentication, from Twitter API.
+	 * Fetches the credentials that can be used to authenticate as a guest user.
 	 *
-	 * @returns The credentials containing the guest token.
+	 * @returns The guest credentials.
 	 *
 	 * @public
 	 *
@@ -178,10 +174,10 @@ export class Auth {
 	}
 
 	/**
-	 * Fetches the credentials for user authentication, from Twitter API.
+	 * Fetches the credentials that can be used to authenticate as a logged-in user.
 	 *
 	 * @param accCred - The credentials (email, username and password) to the Twitter account.
-	 * @returns The credentials containing the authenticated tokens.
+	 * @returns The user credentials.
 	 *
 	 * @public
 	 *
