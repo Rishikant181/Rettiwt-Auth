@@ -15,7 +15,17 @@ import { LoginSubtaskPayload } from './models/request/payloads/LoginSubtask';
 import { EAuthenticationErrors } from './enums/Authentication';
 
 /**
- * A class that deals with authenticating against Twitter API.
+ * This class deals with authenticating against Twitter API.
+ *
+ * There are two authentication methods available:
+ * 1. **Guest Authentication:**
+ * This type of authentication does not require a Twitter account.
+ * However, it offers limited functionality.
+ * Use the {@link Auth.getGuestCredential} method to authenticate as a guest.
+ *
+ * 2. **User Authentication:**
+ * This type of authentication requires a working Twitter account and offers a wider range of functionality.
+ * Use the {@link Auth.getUserCredential} method to authenticate as a logged-in user.
  *
  * @public
  */
@@ -29,6 +39,11 @@ export class Auth {
 	/** The order in which the login subtasks must be executed. */
 	private subtasks: ELoginSubtasks[];
 
+	/**
+	 * Initializes a new Auth instance and prepares it for the login process.
+	 *
+	 * @internal
+	 */
 	public constructor() {
 		this.flowToken = '';
 		this.cred = new AuthCredential();
@@ -119,11 +134,28 @@ export class Auth {
 	}
 
 	/**
-	 * Fetches a guest token, for guest authentication, from Twitter API.
+	 * Fetches the credentials that can be used to authenticate as a guest user.
 	 *
-	 * @returns The credentials containing the guest token.
+	 * @returns The guest credentials.
 	 *
 	 * @public
+	 *
+	 * @example
+	 * ```
+	 * import { Auth } from 'rettiwt-auth';
+	 *
+	 * const auth = new Auth();
+	 *
+	 * auth.getGuestCredential()
+	 * .then(credential => {
+	 * 	// Use the credential to do something
+	 * 	...
+	 * })
+	 * .catch(error => {
+	 * 	// Log error message for debug purpose
+	 * 	console.log(err);
+	 * })
+	 * ```
 	 */
 	public async getGuestCredential(): Promise<AuthCredential> {
 		// Creating a new blank credential
@@ -142,12 +174,42 @@ export class Auth {
 	}
 
 	/**
-	 * Fetches the credentials for user authentication, from Twitter API.
+	 * Fetches the credentials that can be used to authenticate as a logged-in user.
 	 *
 	 * @param accCred - The credentials (email, username and password) to the Twitter account.
-	 * @returns The credentials containing the authenticated tokens.
+	 * @returns The user credentials.
 	 *
 	 * @public
+	 *
+	 * @example
+	 * ```
+	 * import { Auth } from 'rettiwt-auth';
+	 *
+	 * const auth = new Auth();
+	 *
+	 * new auth.getUserCredential({
+	 * 	email: '<account_email>',
+	 * 	userName: '<account_username>',
+	 * 	password: '<account_password>'
+	 * })
+	 * .then(credential => {
+	 * 	// Converting the credentials to HTTP headers.
+	 * 	credentialHeaders = credential.toHeader();
+	 *
+	 * 	// Save the credential headers for later use
+	 * 	...
+	 * })
+	 * .catch(error => {
+	 * 	...
+	 * })
+	 * ```
+	 *
+	 * Where,
+	 * - \<account_email\> is the email associated with the Twitter account.
+	 * - \<account_username\> is the username associated with the Twitter account.
+	 * - \<account_password\> is the password to the Twitter account.
+	 *
+	 * For authenticating requests, the credentialHeaders should be appended to outgoing HTTP requests to Twitter.
 	 */
 	public async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
 		// Creating a new guest credential

@@ -9,9 +9,3 @@ export { AuthHeader } from './models/AuthHeader';
 
 // SERVICES
 export { Auth } from './Auth';
-
-// TYPES
-export { IAccountCredential } from './types/AccountCredential';
-export { IAuthCookie } from './types/AuthCookie';
-export { IAuthCredential } from './types/AuthCredential';
-export { IAuthHeader } from './types/AuthHeader';
