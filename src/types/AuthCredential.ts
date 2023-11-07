@@ -4,35 +4,19 @@ import { EAuthenticationType } from '../enums/Authentication';
 /**
  * The credentials for authenticating against Twitter.
  *
- * @public
+ * @internal
  */
 export interface IAuthCredential {
-	/**
-	 * The bearer token from twitter.com.
-	 *
-	 * @internal
-	 */
+	/** The bearer token from twitter.com. */
 	authToken?: string;
 
-	/**
-	 * The guest token provided by Twitter API.
-	 *
-	 * @internal
-	 */
+	/** The guest token provided by Twitter API. */
 	guestToken?: string;
 
-	/**
-	 * The CSRF token for the session.
-	 *
-	 * @internal
-	 */
+	/** The CSRF token for the session. */
 	csrfToken?: string;
 
-	/**
-	 * The cookie of the twitter account, which is used to authenticate against twitter.
-	 *
-	 * @internal
-	 */
+	/** The cookie of the twitter account, which is used to authenticate against twitter. */
 	cookie?: string;
 
 	/** The types of credential. */

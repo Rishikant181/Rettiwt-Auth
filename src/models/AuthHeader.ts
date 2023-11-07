@@ -5,7 +5,7 @@ import { IAuthHeader } from '../types/AuthHeader';
 import { AuthCredential } from './AuthCredential';
 
 /**
- * The authentication credentials in header form that can be used authenticating against Twitter.
+ * The authentication credentials in header form that can be used for authenticating against Twitter.
  *
  * @public
  */

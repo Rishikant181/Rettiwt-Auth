@@ -14,10 +14,18 @@ import { AuthHeader } from './AuthHeader';
  * @public
  */
 export class AuthCredential implements IAuthCredential {
+	/** @internal */
 	public authToken?: string;
+
+	/** @internal */
 	public guestToken?: string;
+
+	/** @internal */
 	public csrfToken?: string;
+
+	/** @internal */
 	public cookies?: string;
+
 	public authenticationType?: EAuthenticationType;
 
 	/**

@@ -1,7 +1,7 @@
 /**
- * The authentication credentials in header form that can be used authenticating against Twitter.
+ * The authentication credentials in header form that can be used for authenticating against Twitter.
  *
- * @public
+ * @internal
  */
 export interface IAuthHeader {
 	/* eslint-disable */
