@@ -5,7 +5,7 @@ import { IAuthHeader } from '../types/AuthHeader';
 import { AuthCredential } from './AuthCredential';
 
 /**
- * The headers that are used for authenticating against Twitter API.
+ * The authentication credentials in header form that can be used authenticating against Twitter.
  *
  * @public
  */
@@ -28,6 +28,8 @@ export class AuthHeader implements IAuthHeader {
 	 * Creates a new instance from the given AuthCredential object.
 	 *
 	 * @param cred - The AuthCredential from which to generate headers.
+	 *
+	 * @internal
 	 */
 	public 'constructor'(cred: AuthCredential) {
 		/**

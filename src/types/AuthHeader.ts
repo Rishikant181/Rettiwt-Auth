@@ -1,5 +1,5 @@
 /**
- * The headers that are used for authenticating against Twitter API.
+ * The authentication credentials in header form that can be used authenticating against Twitter.
  *
  * @public
  */

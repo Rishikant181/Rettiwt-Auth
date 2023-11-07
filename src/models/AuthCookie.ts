@@ -11,16 +11,9 @@ import { IAuthCookie } from '../types/AuthCookie';
  */
 export class AuthCookie implements IAuthCookie {
 	/* eslint-disable @typescript-eslint/naming-convention */
-	/** Token used to authenticate a device. */
 	public kdt: string = '';
-
-	/** Token used to authenticate a user using a Twitter ID. */
 	public twid: string = '';
-
-	/** The CSRF token of the session. */
 	public ct0: string = '';
-
-	/** The authentication token used while logging in to the account. */
 	public auth_token: string = '';
 	/* eslint-enable @typescript-eslint/naming-convention */
 

@@ -4,7 +4,7 @@
  * @public
  */
 export interface IAccountCredential {
-	/** The mail to the Twitter account. */
+	/** The email id associated with the Twitter account. */
 	email: string;
 
 	/** The username associated with the Twitter account. */
