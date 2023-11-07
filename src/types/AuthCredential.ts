@@ -19,6 +19,6 @@ export interface IAuthCredential {
 	/** The cookie of the twitter account, which is used to authenticate against twitter. */
 	cookie?: string;
 
-	/** The types of credential. */
+	/** The types of authentication. */
 	authenticationType?: EAuthenticationType;
 }
