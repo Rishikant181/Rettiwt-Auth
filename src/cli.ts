@@ -15,5 +15,10 @@ new Auth()
 		userName: userName,
 		password: password,
 	})
-	.then((res) => console.log(res.toHeader()))
+	.then((res) => {
+		// Converting the cookies to base64 encoded API key
+		const apiKey: string = Buffer.from(res.toHeader().cookie ?? '').toString('base64');
+
+		console.log(apiKey);
+	})
 	.catch((err) => console.log(err));
