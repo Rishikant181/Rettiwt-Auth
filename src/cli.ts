@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 // PACKAGES
+import { writeFileSync } from 'fs';
 import { Command } from 'commander';
 import { Auth } from './';
 
@@ -21,7 +22,9 @@ program
 	.argument('<email>', 'The email id of the Twitter account')
 	.argument('<username>', 'The username associated with the Twitter account')
 	.argument('<password>', 'The password to the Twitter account')
-	.action((email: string, username: string, password: string) => {
+	.option('-o, --output <string>', 'Save the credentials to a json file with the given name')
+	.option('-h, --header', 'Generate the credentials as HTTP headers')
+	.action((email: string, username: string, password: string, options: { output?: string; header: boolean }) => {
 		// Logging in and returning the credentials
 		new Auth()
 			.getUserCredential({
@@ -30,10 +33,29 @@ program
 				password: password,
 			})
 			.then((res) => {
-				// Converting the cookies to base64 encoded API key
-				const apiKey: string = Buffer.from(res.toHeader().cookie ?? '').toString('base64');
+				let creds;
 
-				console.log(apiKey);
+				// If credentials required as headers
+				if (options.header) {
+					creds = res.toHeader();
+					creds = {
+						headers: creds,
+					};
+				}
+				// If credentials required as api key
+				else {
+					creds = Buffer.from(res.toHeader().cookie ?? '').toString('base64');
+					creds = {
+						key: creds,
+					};
+				}
+
+				// If credentials are to be output to file
+				if (options.output) {
+					writeFileSync(`${options.output}.json`, JSON.stringify(creds));
+				} else {
+					console.log(creds);
+				}
 			})
 			.catch((err) => console.log(err));
 	});
