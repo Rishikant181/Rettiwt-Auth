@@ -12,8 +12,6 @@ const program = new Command();
 program.name('rettiwt-auth').description('A CLI tool for authenticating against Twitter API');
 
 /**
- * login
- *
  * This command generates the authentication credentials for authenticating againg Twitter API.
  */
 program
