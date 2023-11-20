@@ -53,7 +53,9 @@ program
 				// If credentials are to be output to file
 				if (options.output) {
 					writeFileSync(`${options.output}.json`, JSON.stringify(creds));
-				} else {
+				}
+				// Else outputting credentials to console
+				else {
 					console.log(creds);
 				}
 			})
