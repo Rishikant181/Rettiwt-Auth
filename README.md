@@ -8,7 +8,7 @@ Rettiwt-Auth is a library that can be used to to get the necessary authenticatio
 
 ## Prerequisites
 
--   NodeJS 18.14.2
+-   NodeJS 20.9.0
 
 ---
 
