@@ -1,6 +1,6 @@
 {
 	"name": "rettiwt-auth",
-	"version": "2.0.0-alpha.0",
+	"version": "2.0.0-alpha.1",
 	"description": "A CLI tool for authenticating against Twitter API",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
