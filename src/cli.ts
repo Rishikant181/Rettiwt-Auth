@@ -9,7 +9,7 @@ import { Auth } from './';
 const program = new Command();
 
 // Setting program details
-program.name('rettiwt-auth').description('A CLI tool to authenticate against Twitter API');
+program.name('rettiwt-auth').description('A CLI tool for authenticating against Twitter API');
 
 /**
  * login
@@ -37,22 +37,16 @@ program
 
 				// If credentials required as headers
 				if (options.header) {
-					creds = res.toHeader();
-					creds = {
-						headers: creds,
-					};
+					creds = JSON.stringify(res.toHeader());
 				}
 				// If credentials required as api key
 				else {
 					creds = Buffer.from(res.toHeader().cookie ?? '').toString('base64');
-					creds = {
-						key: creds,
-					};
 				}
 
 				// If credentials are to be output to file
 				if (options.output) {
-					writeFileSync(`${options.output}.json`, JSON.stringify(creds));
+					writeFileSync(`${options.output}`, creds);
 				}
 				// Else outputting credentials to console
 				else {
