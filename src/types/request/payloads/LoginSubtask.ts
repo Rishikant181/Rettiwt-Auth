@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // TYPES
 import { IJsInstrumentationInput } from './subtasks/JsInstrumentation';
 import { IUserIdentifierInput } from './subtasks/UserIdentifier';

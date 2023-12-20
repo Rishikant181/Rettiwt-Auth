@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export interface IUserIdentifierInput {
 	setting_responses: ISettingResponse[];
 	link: string;

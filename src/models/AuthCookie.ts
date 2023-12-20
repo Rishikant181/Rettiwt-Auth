@@ -10,26 +10,19 @@ import { IAuthCookie } from '../types/AuthCookie';
  * @internal
  */
 export class AuthCookie implements IAuthCookie {
-	/* eslint-disable */
-	/** Token used to authenticate a device. */
-	kdt: string = '';
-
-	/** Token used to authenticate a user using a Twitter ID. */
-	twid: string = '';
-
-	/** The CSRF token of the session. */
-	ct0: string = '';
-
-	/** The authentication token used while logging in to the account. */
-	auth_token: string = '';
-	/* eslint-enable */
+	/* eslint-disable @typescript-eslint/naming-convention */
+	public kdt: string = '';
+	public twid: string = '';
+	public ct0: string = '';
+	public auth_token: string = '';
+	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
 	 * Creates a new AuthCookie object from the given cookie string.
 	 *
-	 * @param cookieStr The cookie string list obtained from set-cookie header.
+	 * @param cookieStr - The cookie string list obtained from set-cookie header.
 	 */
-	constructor(cookieStr: string[]) {
+	public constructor(cookieStr: string[]) {
 		// Storing the cookies in cookie jar
 		const cookies: Cookie[] = new CookieJar().setCookies(cookieStr);
 
@@ -50,7 +43,7 @@ export class AuthCookie implements IAuthCookie {
 	/**
 	 * Converts 'this' object to it's string representation.
 	 */
-	toString(): string {
+	public toString(): string {
 		/** The string representation of 'this' object. */
 		let outStr: string = '';
 

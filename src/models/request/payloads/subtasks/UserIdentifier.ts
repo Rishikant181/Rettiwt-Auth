@@ -18,9 +18,9 @@ export class UserIdentifierInput implements IUserIdentifierInput {
 	/* eslint-enable */
 
 	/**
-	 * @param userId The id to be used for identifying the user.
+	 * @param userId - The id to be used for identifying the user.
 	 */
-	constructor(userId: string) {
+	public constructor(userId: string) {
 		this.setting_responses = [new SettingResponse(userId)];
 		this.link = 'next_link';
 	}
@@ -36,9 +36,9 @@ class SettingResponse implements ISettingResponse {
 	/* eslint-enable */
 
 	/**
-	 * @param responseText The text entered by the user.
+	 * @param responseText - The text entered by the user.
 	 */
-	constructor(responseText: string) {
+	public constructor(responseText: string) {
 		this.key = 'user_identifier';
 		this.response_data = new ResponseData(responseText);
 	}
@@ -53,9 +53,9 @@ class ResponseData implements IResponseData {
 	/* eslint-enable */
 
 	/**
-	 * @param email The email id of the user.
+	 * @param email - The email id of the user.
 	 */
-	constructor(email: string) {
+	public constructor(email: string) {
 		this.text_data = new TextData(email);
 	}
 }
@@ -64,12 +64,12 @@ class ResponseData implements IResponseData {
  * The raw, elemental text data.
  */
 class TextData implements ITextData {
-	result: string;
+	public result: string;
 
 	/**
-	 * @param text The text data entered.
+	 * @param text - The text data entered.
 	 */
-	constructor(text: string) {
+	public constructor(text: string) {
 		this.result = text;
 	}
 }

@@ -5,31 +5,26 @@ import { IAuthHeader } from '../types/AuthHeader';
 import { AuthCredential } from './AuthCredential';
 
 /**
- * The headers that are used for authenticating against Twitter API.
+ * The authentication credentials in header form that can be used for authenticating against Twitter.
  *
  * @public
  */
 export class AuthHeader implements IAuthHeader {
-	/* eslint-disable */
-	/** The bearer token from twitter.com. */
-	'authorization'?: string;
-
-	/** The guest token provided by Twitter API. */
-	'x-guest-token'?: string;
-
-	/** The csrf token for the session. */
-	'x-csrf-token'?: string;
-
-	/** The cookie of the twitter account, which is used to authenticate against twitter. */
-	'cookie'?: string;
-	/* eslint-enable */
+	/* eslint-disable @typescript-eslint/naming-convention */
+	public 'authorization'?: string;
+	public 'x-guest-token'?: string;
+	public 'x-csrf-token'?: string;
+	public 'cookie'?: string;
+	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
 	 * Creates a new instance from the given AuthCredential object.
 	 *
-	 * @param cred The AuthCredential from which to generate headers.
+	 * @param cred - The AuthCredential from which to generate headers.
+	 *
+	 * @internal
 	 */
-	'constructor'(cred: AuthCredential) {
+	public 'constructor'(cred: AuthCredential) {
 		/**
 		 * Conditionally initializing only those data which are supplied.
 		 *

@@ -1,10 +1,10 @@
 /**
  * The credentials of the Twitter account to be logged into.
  *
- * @public
+ * @internal
  */
 export interface IAccountCredential {
-	/** The mail to the Twitter account. */
+	/** The email id associated with the Twitter account. */
 	email: string;
 
 	/** The username associated with the Twitter account. */

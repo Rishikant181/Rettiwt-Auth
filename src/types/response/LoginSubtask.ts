@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 export interface Root {
 	flow_token: string;
 	status: string;

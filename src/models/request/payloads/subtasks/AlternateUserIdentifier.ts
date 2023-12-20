@@ -7,13 +7,13 @@ import { IAlternateUserIdentifierInput } from '../../../../types/request/payload
  * @internal
  */
 export class AlternateUserIdentifierInput implements IAlternateUserIdentifierInput {
-	text: string;
-	link: string;
+	public text: string;
+	public link: string;
 
 	/**
-	 * @param userName The username associated with the Twitter account.
+	 * @param userName - The username associated with the Twitter account.
 	 */
-	constructor(userName: string) {
+	public constructor(userName: string) {
 		this.text = userName;
 		this.link = 'next_link';
 	}
