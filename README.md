@@ -42,16 +42,13 @@ The following examples demonstrate authenticating against Twitter API and genera
 
 1.  Install the package globally by following the steps in the 'Installation' section.
 2.  Open a commandline/shell and use the command:  
-    `rettiwt-auth generate -o api_key.txt <email> <username> <password>`
+    `rettiwt-auth generate <email> <username> <password>`
 
     Where,
 
     -   \<email\> is the email to the Twitter account.
     -   \<username\> is the username associated with the Twitter account.
     -   \<password\> is the password to the Twitter account.
-
-    The '-o' option specifies the CLI to save the output API key to a new text file called 'api_key.txt'.  
-    If you do not specify the '-o' option, the API key is output to console instead.
 
 3.  Store the generated API key in a safe spot for later use.
 
@@ -59,7 +56,7 @@ The following examples demonstrate authenticating against Twitter API and genera
 
 1.  Install the package globally by following the steps in the 'Installation' section.
 2.  Open a commandline/shell and use the command:  
-    `rettiwt-auth generate -h -o auth_headers.json <email> <username> <password>`
+    `rettiwt-auth generate -h <email> <username> <password>`
 
     Where,
 
@@ -67,9 +64,7 @@ The following examples demonstrate authenticating against Twitter API and genera
     -   \<username\> is the username associated with the Twitter account.
     -   \<password\> is the password to the Twitter account.
 
-    The '-h' option specifies the CLI to generate the credentials as HTTP headers.  
-    The '-o' option specifies the CLI to save the output HTTP headers to a new JSON file called 'auth_headers.json'.  
-    If you do not specify the '-o' option, the HTTP headers are output to console instead.
+    The '-h' option specifies the CLI to generate the credentials as HTTP headers.
 
 3.  Store the generated API key in a safe spot for later use.
 4.  For authenticating the requests to Twitter, append the headers to outgoing HTTP requests.
