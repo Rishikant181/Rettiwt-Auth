@@ -9,9 +9,9 @@ import { Root as IGuestTokenResponse } from './types/response/GuestToken';
 import { Root as ILoginSubtaskResponse } from './types/response/LoginSubtask';
 
 // MODELS
-import { AuthCredential } from './models/AuthCredential';
-import { AccountCredential } from './models/AccountCredential';
-import { LoginSubtaskPayload } from './models/request/payloads/LoginSubtask';
+import { AuthCredential } from './models/data/AuthCredential';
+import { AccountCredential } from './models/data/AccountCredential';
+import { LoginSubtaskPayload } from './models/payloads/LoginSubtask';
 import { EAuthenticationErrors } from './enums/Authentication';
 
 /**

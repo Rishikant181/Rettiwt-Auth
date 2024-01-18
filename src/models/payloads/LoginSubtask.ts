@@ -1,12 +1,12 @@
 // ENUMS
-import { ELoginSubtasks } from '../../../enums/Login';
+import { ELoginSubtasks } from '../../enums/Login';
 
 // MODELS
-import { JsInstrumentationInput } from './subtasks/JsInstrumentation';
-import { UserIdentifierInput } from './subtasks/UserIdentifier';
-import { AlternateUserIdentifierInput } from './subtasks/AlternateUserIdentifier';
-import { PasswordInput } from './subtasks/Password';
-import { AccountDuplicationCheckInput } from './subtasks/AccountDuplicationCheck';
+import { JsInstrumentationInput } from './subtask_inputs/JsInstrumentation';
+import { UserIdentifierInput } from './subtask_inputs/UserIdentifier';
+import { AlternateUserIdentifierInput } from './subtask_inputs/AlternateUserIdentifier';
+import { PasswordInput } from './subtask_inputs/Password';
+import { AccountDuplicationCheckInput } from './subtask_inputs/AccountDuplicationCheck';
 
 /**
  * The payload to be sent for each login subtask.

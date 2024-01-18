@@ -1,5 +1,5 @@
 // ENUMS
-import { EAuthenticationType } from '../enums/Authentication';
+import { EAuthenticationType } from '../../enums/Authentication';
 
 // MODELS
 import { AuthCookie } from './AuthCookie';
