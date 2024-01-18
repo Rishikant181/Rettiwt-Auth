@@ -1,6 +1,3 @@
-// TYPES
-import { ILoginSubtaskInput, ILoginSubtaskPayload } from '../../../types/request/payloads/LoginSubtask';
-
 // ENUMS
 import { ELoginSubtasks } from '../../../enums/Login';
 
@@ -16,7 +13,7 @@ import { AccountDuplicationCheckInput } from './subtasks/AccountDuplicationCheck
  *
  * @internal
  */
-export class LoginSubtaskPayload implements ILoginSubtaskPayload {
+export class LoginSubtaskPayload {
 	/* eslint-disable @typescript-eslint/naming-convention */
 	public flow_token: string;
 	public subtask_inputs: LoginSubtaskInput[];
@@ -38,7 +35,7 @@ export class LoginSubtaskPayload implements ILoginSubtaskPayload {
  *
  * @internal
  */
-class LoginSubtaskInput implements ILoginSubtaskInput {
+class LoginSubtaskInput {
 	/* eslint-disable @typescript-eslint/naming-convention */
 	public subtask_id: string;
 	public js_instrumentation?: JsInstrumentationInput;

@@ -1,20 +1,26 @@
 // PACKAGES
 import { Cookie, CookieJar } from 'cookiejar';
 
-// TYPES
-import { IAuthCookie } from '../types/AuthCookie';
-
 /**
  * The cookie containing the tokens that are used to authenticate against Twitter.
  *
  * @internal
  */
-export class AuthCookie implements IAuthCookie {
+export class AuthCookie {
 	/* eslint-disable @typescript-eslint/naming-convention */
+
+	/** Token used to authenticate a device. */
 	public kdt: string = '';
+
+	/** Token used to authenticate a user using a Twitter ID. */
 	public twid: string = '';
+
+	/** The CSRF token for the session. */
 	public ct0: string = '';
+
+	/** The bearer token from twitter.com. */
 	public auth_token: string = '';
+
 	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
