@@ -1,6 +1,3 @@
-// TYPES
-import { IAuthHeader } from '../types/AuthHeader';
-
 // MODELS
 import { AuthCredential } from './AuthCredential';
 
@@ -9,12 +6,21 @@ import { AuthCredential } from './AuthCredential';
  *
  * @public
  */
-export class AuthHeader implements IAuthHeader {
+export class AuthHeader {
 	/* eslint-disable @typescript-eslint/naming-convention */
+
+	/** The bearer token from twitter.com. */
 	public 'authorization'?: string;
+
+	/** The guest token provided by Twitter API. */
 	public 'x-guest-token'?: string;
+
+	/** The csrf token for the session. */
 	public 'x-csrf-token'?: string;
+
+	/** The cookie of the twitter account, which is used to authenticate against twitter. */
 	public 'cookie'?: string;
+
 	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**

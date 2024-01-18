@@ -1,8 +1,5 @@
 // ENUMS
-import { EAuthenticationType } from '../enums/Authentication';
-
-// TYPES
-import { IAuthCredential } from '../types/AuthCredential';
+import { EAuthenticationType } from '../../enums/Authentication';
 
 // MODELS
 import { AuthCookie } from './AuthCookie';
@@ -13,11 +10,20 @@ import { AuthHeader } from './AuthHeader';
  *
  * @public
  */
-export class AuthCredential implements IAuthCredential {
+export class AuthCredential {
+	/** The bearer token from twitter.com. */
 	public authToken?: string;
+
+	/** The guest token provided by Twitter API. */
 	public guestToken?: string;
+
+	/** The CSRF token for the session. */
 	public csrfToken?: string;
+
+	/** The cookie of the twitter account, which is used to authenticate against twitter. */
 	public cookies?: string;
+
+	/** The type of authentication. */
 	public authenticationType?: EAuthenticationType;
 
 	/**
