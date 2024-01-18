@@ -1,10 +1,13 @@
 // PACKAGES
 import axios, { AxiosError } from 'axios';
+import https, { Agent } from 'https';
+import { HttpsProxyAgent } from 'https-proxy-agent';
 
 // ENUMS
 import { ELoginUrls, ELoginSubtasks } from './enums/Login';
 
 // TYPES
+import { IAuthConfig } from './types/AuthConfig';
 import { Root as IGuestTokenResponse } from './types/response/GuestToken';
 import { Root as ILoginSubtaskResponse } from './types/response/LoginSubtask';
 
@@ -30,6 +33,9 @@ import { EAuthenticationErrors } from './enums/Authentication';
  * @public
  */
 export class Auth {
+	/** The HTTPS Agent to use for requests to Twitter API. */
+	private readonly httpsAgent: Agent;
+
 	/** The current flow token. */
 	private flowToken: string;
 
@@ -44,7 +50,8 @@ export class Auth {
 	 *
 	 * @internal
 	 */
-	public constructor() {
+	public constructor(config?: IAuthConfig) {
+		this.httpsAgent = config?.proxyUrl ? new HttpsProxyAgent(config.proxyUrl) : new https.Agent();
 		this.flowToken = '';
 		this.cred = new AuthCredential();
 		this.subtasks = [
@@ -123,6 +130,7 @@ export class Auth {
 		await axios
 			.post<ILoginSubtaskResponse>(ELoginUrls.INITIATE_LOGIN, null, {
 				headers: { ...this.cred.toHeader() },
+				httpsAgent: this.httpsAgent,
 			})
 			.then((res) => {
 				// Setting the flow token
@@ -165,6 +173,7 @@ export class Auth {
 		await axios
 			.post<IGuestTokenResponse>(ELoginUrls.GUEST_TOKEN, null, {
 				headers: { ...cred.toHeader() },
+				httpsAgent: this.httpsAgent,
 			})
 			.then((res) => {
 				cred.guestToken = res.data.guest_token;
@@ -227,6 +236,7 @@ export class Auth {
 			await axios
 				.post<ILoginSubtaskResponse>(ELoginUrls.LOGIN_SUBTASK, payload, {
 					headers: { ...this.cred.toHeader() },
+					httpsAgent: this.httpsAgent,
 				})
 				.then((res) => {
 					/**
