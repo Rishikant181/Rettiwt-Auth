@@ -22,8 +22,6 @@ export class AuthCookie {
 	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**
-	 * Creates a new AuthCookie object from the given cookie string.
-	 *
 	 * @param cookieStr - The cookie string list obtained from set-cookie header.
 	 */
 	public constructor(cookieStr: string[]) {
@@ -45,7 +43,7 @@ export class AuthCookie {
 	}
 
 	/**
-	 * Converts 'this' object to it's string representation.
+	 * @returns the string representation of 'this' object.
 	 */
 	public toString(): string {
 		/** The string representation of 'this' object. */

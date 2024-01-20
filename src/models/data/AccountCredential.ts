@@ -12,8 +12,6 @@ export class AccountCredential {
 	public password: string;
 
 	/**
-	 * Initializes a new AccountCredential instance.
-	 *
 	 * @param cred - The credentials to the Twitter account.
 	 */
 	public constructor(cred: AccountCredential) {

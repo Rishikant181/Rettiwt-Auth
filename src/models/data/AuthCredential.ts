@@ -7,6 +7,11 @@ import { AuthHeader } from './AuthHeader';
 
 /**
  * The credentials for authenticating against Twitter.
+ *
+ * Depending on which tokens are present, the authentication type is determined as follows:
+ * - authToken, guestToken =\> Guest authentication.
+ * - authToken, csrfToken, cookie =\> User authentication.
+ * - authToken, guestToken, cookie =\> Guest authentication while logging in.
  */
 export class AuthCredential {
 	/** The bearer token from twitter.com. */
@@ -25,13 +30,6 @@ export class AuthCredential {
 	public authenticationType?: EAuthenticationType;
 
 	/**
-	 * Generates a new AuthCredentials using the given credentials.
-	 *
-	 * Depending on which tokens are present, the authentication type is determined as follows:
-	 * - authToken, guestToken =\> Guest authentication.
-	 * - authToken, csrfToken, cookie =\> User authentication.
-	 * - authToken, guestToken, cookie =\> Guest authentication while logging in.
-	 *
 	 * @param cookies - The list of cookie strings to be used for authenticating against Twitter.
 	 * @param guestToken - The guest token to be used to authenticate a guest session.
 	 */
@@ -64,9 +62,7 @@ export class AuthCredential {
 	}
 
 	/**
-	 * Converts 'this' object to it's equivalent HTTP header representation.
-	 *
-	 * @returns 'this' object's equivalent HTTP header representation.
+	 * @returns The HTTP header representation of 'this' object.
 	 */
 	public toHeader(): AuthHeader {
 		return new AuthHeader(this);

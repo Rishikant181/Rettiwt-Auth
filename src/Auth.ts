@@ -28,7 +28,7 @@ export class Auth {
 	private subtasks: ELoginSubtasks[];
 
 	/**
-	 * Initializes a new Auth instance and prepares it for the login process.
+	 * @param config - The config object.
 	 */
 	public constructor(config?: IAuthConfig) {
 		this.httpsAgent = config?.proxyUrl ? new HttpsProxyAgent(config.proxyUrl) : new https.Agent();
@@ -42,12 +42,11 @@ export class Auth {
 	}
 
 	/**
-	 * Generates the apporpriate payload for the given login subtask and given data.
-	 *
 	 * @param subtask - The name of the subtask.
 	 * @param flowToken - The flow token for the subtask.
 	 * @param accCred - The account credentials to the Twitter account.
-	 * @returns The requried payload.
+	 *
+	 * @returns The appropriate payload for the given subtask.
 	 */
 	private getSubtaskPayload(
 		subtask: ELoginSubtasks,
@@ -66,10 +65,11 @@ export class Auth {
 	}
 
 	/**
-	 * Executes the given login subtask and returns the response.
+	 * Executes the given login subtask.
 	 *
 	 * @param url - The URL against which the subtask is to be executed.
 	 * @param payload - The payload to be sent.
+	 *
 	 * @returns The response received from executing the subtask.
 	 */
 	private async executeSubtask<ResponseType>(
@@ -88,6 +88,7 @@ export class Auth {
 	 *
 	 * @param error - The incoming error.
 	 * @param flowName - The flow that was executed, which raised this error.
+	 *
 	 * @returns The simplified error message.
 	 */
 	private parseAuthError(error: AxiosError<ILoginSubtaskResponse>, flowName: ELoginSubtasks): EAuthenticationErrors {
@@ -114,9 +115,7 @@ export class Auth {
 	}
 
 	/**
-	 * Fetches the credentials that can be used to authenticate as a guest user.
-	 *
-	 * @returns The guest credentials.
+	 * @returns A new 'guest' credential.
 	 */
 	public async getGuestCredential(): Promise<AuthCredential> {
 		// Creating a new blank credential
@@ -131,10 +130,9 @@ export class Auth {
 	}
 
 	/**
-	 * Fetches the credentials that can be used to authenticate as a logged-in user.
-	 *
 	 * @param accCred - The credentials (email, username and password) to the Twitter account.
-	 * @returns The user credentials.
+	 *
+	 * @returns The 'user' credentials for the given Twitter account.
 	 */
 	public async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
 		let cred: AuthCredential = await this.getGuestCredential();
