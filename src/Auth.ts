@@ -1,5 +1,5 @@
 // PACKAGES
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import https, { Agent } from 'https';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
@@ -20,27 +20,11 @@ import { EAuthenticationErrors } from './enums/Authentication';
 /**
  * This class deals with authenticating against Twitter API.
  *
- * There are two authentication methods available:
- * 1. **Guest Authentication:**
- * This type of authentication does not require a Twitter account.
- * However, it offers limited functionality.
- * Use the {@link Auth.getGuestCredential} method to authenticate as a guest.
- *
- * 2. **User Authentication:**
- * This type of authentication requires a working Twitter account and offers a wider range of functionality.
- * Use the {@link Auth.getUserCredential} method to authenticate as a logged-in user.
- *
  * @public
  */
 export class Auth {
 	/** The HTTPS Agent to use for requests to Twitter API. */
 	private readonly httpsAgent: Agent;
-
-	/** The current flow token. */
-	private flowToken: string;
-
-	/** The current auth credentials. */
-	private cred: AuthCredential;
 
 	/** The order in which the login subtasks must be executed. */
 	private subtasks: ELoginSubtasks[];
@@ -52,8 +36,6 @@ export class Auth {
 	 */
 	public constructor(config?: IAuthConfig) {
 		this.httpsAgent = config?.proxyUrl ? new HttpsProxyAgent(config.proxyUrl) : new https.Agent();
-		this.flowToken = '';
-		this.cred = new AuthCredential();
 		this.subtasks = [
 			ELoginSubtasks.JS_INSTRUMENTATION,
 			ELoginSubtasks.ENTER_USER_IDENTIFIER,
@@ -90,6 +72,26 @@ export class Auth {
 	}
 
 	/**
+	 * Executes the given login subtask and returns the response.
+	 *
+	 * @param url - The URL against which the subtask is to be executed.
+	 * @param payload - The payload to be sent.
+	 * @returns The response received from executing the subtask.
+	 *
+	 * @internal
+	 */
+	private async executeSubtask<ResponseType>(
+		url: ELoginUrls,
+		credential: AuthCredential,
+		payload?: NonNullable<unknown>,
+	): Promise<AxiosResponse<ResponseType>> {
+		return await axios.post<ResponseType>(url, payload, {
+			headers: { ...credential.toHeader() },
+			httpsAgent: this.httpsAgent,
+		});
+	}
+
+	/**
 	 * Parses the incoming authentication error from Twitter API into a simplified message.
 	 *
 	 * @param error - The incoming error.
@@ -122,62 +124,20 @@ export class Auth {
 	}
 
 	/**
-	 * Initiates the login process and gets the required flow token and cookies for the login process.
-	 *
-	 * @internal
-	 */
-	private async initiateLogin(): Promise<void> {
-		await axios
-			.post<ILoginSubtaskResponse>(ELoginUrls.INITIATE_LOGIN, null, {
-				headers: { ...this.cred.toHeader() },
-				httpsAgent: this.httpsAgent,
-			})
-			.then((res) => {
-				// Setting the flow token
-				this.flowToken = res.data.flow_token;
-
-				// Setting the cookie string of the auth credentials
-				this.cred.cookies = (res.headers['set-cookie'] as string[]).join(';');
-			});
-	}
-
-	/**
 	 * Fetches the credentials that can be used to authenticate as a guest user.
 	 *
 	 * @returns The guest credentials.
 	 *
 	 * @public
-	 *
-	 * @example
-	 * ```
-	 * import { Auth } from 'rettiwt-auth';
-	 *
-	 * const auth = new Auth();
-	 *
-	 * auth.getGuestCredential()
-	 * .then(credential => {
-	 * 	// Use the credential to do something
-	 * 	...
-	 * })
-	 * .catch(error => {
-	 * 	// Log error message for debug purpose
-	 * 	console.log(err);
-	 * })
-	 * ```
 	 */
 	public async getGuestCredential(): Promise<AuthCredential> {
 		// Creating a new blank credential
 		const cred: AuthCredential = new AuthCredential();
 
 		// Getting the guest token
-		await axios
-			.post<IGuestTokenResponse>(ELoginUrls.GUEST_TOKEN, null, {
-				headers: { ...cred.toHeader() },
-				httpsAgent: this.httpsAgent,
-			})
-			.then((res) => {
-				cred.guestToken = res.data.guest_token;
-			});
+		await this.executeSubtask<IGuestTokenResponse>(ELoginUrls.GUEST_TOKEN, cred, undefined).then((res) => {
+			cred.guestToken = res.data.guest_token;
+		});
 
 		return cred;
 	}
@@ -189,55 +149,27 @@ export class Auth {
 	 * @returns The user credentials.
 	 *
 	 * @public
-	 *
-	 * @example
-	 * ```
-	 * import { Auth } from 'rettiwt-auth';
-	 *
-	 * const auth = new Auth();
-	 *
-	 * new auth.getUserCredential({
-	 * 	email: '<account_email>',
-	 * 	userName: '<account_username>',
-	 * 	password: '<account_password>'
-	 * })
-	 * .then(credential => {
-	 * 	// Converting the credentials to HTTP headers.
-	 * 	credentialHeaders = credential.toHeader();
-	 *
-	 * 	// Save the credential headers for later use
-	 * 	...
-	 * })
-	 * .catch(error => {
-	 * 	...
-	 * })
-	 * ```
-	 *
-	 * Where,
-	 * - \<account_email\> is the email associated with the Twitter account.
-	 * - \<account_username\> is the username associated with the Twitter account.
-	 * - \<account_password\> is the password to the Twitter account.
-	 *
-	 * For authenticating requests, the credentialHeaders should be appended to outgoing HTTP requests to Twitter.
 	 */
 	public async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
-		// Creating a new guest credential
-		this.cred = await this.getGuestCredential();
+		let cred: AuthCredential = await this.getGuestCredential();
+		let flowToken: string = '';
 
 		// Initiating the login process
-		await this.initiateLogin();
+		await this.executeSubtask<ILoginSubtaskResponse>(ELoginUrls.INITIATE_LOGIN, cred, undefined).then((res) => {
+			// Setting the flow token
+			flowToken = res.data.flow_token;
+
+			// Setting the cookie string of the auth credentials
+			cred.cookies = (res.headers['set-cookie'] as string[]).join(';');
+		});
 
 		// Executing the subtasks in the pre-defined order
 		for (let i: number = 0; i < this.subtasks.length; i++) {
 			// Preparing the subtask payload
-			const payload: LoginSubtaskPayload = this.getSubtaskPayload(this.subtasks[i], this.flowToken, accCred);
+			const payload: LoginSubtaskPayload = this.getSubtaskPayload(this.subtasks[i], flowToken, accCred);
 
 			// Executing the subtask
-			await axios
-				.post<ILoginSubtaskResponse>(ELoginUrls.LOGIN_SUBTASK, payload, {
-					headers: { ...this.cred.toHeader() },
-					httpsAgent: this.httpsAgent,
-				})
+			await this.executeSubtask<ILoginSubtaskResponse>(ELoginUrls.LOGIN_SUBTASK, cred, payload)
 				.then((res) => {
 					/**
 					 * After the execution of ENTER_USER_IDENTIFIER subtask, two outcomes are possible:
@@ -257,11 +189,11 @@ export class Auth {
 					}
 
 					// Getting the flow token required for next subtask
-					this.flowToken = res.data.flow_token;
+					flowToken = res.data.flow_token;
 
 					// If this is the last subtask, namely ACCOUNT_DUPLICATION_CHECK, setting the AuthCredentials
 					if (this.subtasks[i] == ELoginSubtasks.ACCOUNT_DUPLICATION_CHECK) {
-						this.cred = new AuthCredential(res.headers['set-cookie'] as string[]);
+						cred = new AuthCredential(res.headers['set-cookie'] as string[]);
 					}
 				})
 				/**
@@ -274,6 +206,6 @@ export class Auth {
 				});
 		}
 
-		return this.cred;
+		return cred;
 	}
 }
