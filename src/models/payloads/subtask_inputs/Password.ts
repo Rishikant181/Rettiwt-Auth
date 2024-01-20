@@ -1,7 +1,5 @@
 /**
  * The input data to be sent for logging in using password.
- *
- * @internal
  */
 export class PasswordInput {
 	public password: string;

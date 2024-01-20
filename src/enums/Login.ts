@@ -1,7 +1,5 @@
 /**
  * The various urls for various operations related to login.
- *
- * @internal
  */
 export enum ELoginUrls {
 	GUEST_TOKEN = 'https://api.twitter.com/1.1/guest/activate.json',
@@ -11,8 +9,6 @@ export enum ELoginUrls {
 
 /**
  * The various subtasks involved in logging in to a Twitter account.
- *
- * @internal
  */
 export enum ELoginSubtasks {
 	JS_INSTRUMENTATION = 'LoginJsInstrumentationSubtask',

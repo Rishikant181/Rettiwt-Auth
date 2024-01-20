@@ -10,8 +10,6 @@ import { AccountDuplicationCheckInput } from './subtask_inputs/AccountDuplicatio
 
 /**
  * The payload to be sent for each login subtask.
- *
- * @internal
  */
 export class LoginSubtaskPayload {
 	/* eslint-disable @typescript-eslint/naming-convention */
@@ -32,8 +30,6 @@ export class LoginSubtaskPayload {
 
 /**
  * The subtask input according to the type of subtask to be executed.
- *
- * @internal
  */
 class LoginSubtaskInput {
 	/* eslint-disable @typescript-eslint/naming-convention */

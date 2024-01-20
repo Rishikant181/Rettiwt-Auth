@@ -1,7 +1,5 @@
 /**
  * The credentials of the Twitter account to be logged into.
- *
- * @public
  */
 export class AccountCredential {
 	/** The email id associated with the Twitter account. */
@@ -17,8 +15,6 @@ export class AccountCredential {
 	 * Initializes a new AccountCredential instance.
 	 *
 	 * @param cred - The credentials to the Twitter account.
-	 *
-	 * @internal
 	 */
 	public constructor(cred: AccountCredential) {
 		this.email = cred.email;

@@ -3,8 +3,6 @@ import { AuthCredential } from './AuthCredential';
 
 /**
  * The authentication credentials in header form that can be used for authenticating against Twitter.
- *
- * @public
  */
 export class AuthHeader {
 	/* eslint-disable @typescript-eslint/naming-convention */
@@ -27,8 +25,6 @@ export class AuthHeader {
 	 * Creates a new instance from the given AuthCredential object.
 	 *
 	 * @param cred - The AuthCredential from which to generate headers.
-	 *
-	 * @internal
 	 */
 	public 'constructor'(cred: AuthCredential) {
 		/**

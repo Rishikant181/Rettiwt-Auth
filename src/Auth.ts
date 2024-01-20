@@ -19,8 +19,6 @@ import { EAuthenticationErrors } from './enums/Authentication';
 
 /**
  * This class deals with authenticating against Twitter API.
- *
- * @public
  */
 export class Auth {
 	/** The HTTPS Agent to use for requests to Twitter API. */
@@ -31,8 +29,6 @@ export class Auth {
 
 	/**
 	 * Initializes a new Auth instance and prepares it for the login process.
-	 *
-	 * @internal
 	 */
 	public constructor(config?: IAuthConfig) {
 		this.httpsAgent = config?.proxyUrl ? new HttpsProxyAgent(config.proxyUrl) : new https.Agent();
@@ -52,8 +48,6 @@ export class Auth {
 	 * @param flowToken - The flow token for the subtask.
 	 * @param accCred - The account credentials to the Twitter account.
 	 * @returns The requried payload.
-	 *
-	 * @internal
 	 */
 	private getSubtaskPayload(
 		subtask: ELoginSubtasks,
@@ -77,8 +71,6 @@ export class Auth {
 	 * @param url - The URL against which the subtask is to be executed.
 	 * @param payload - The payload to be sent.
 	 * @returns The response received from executing the subtask.
-	 *
-	 * @internal
 	 */
 	private async executeSubtask<ResponseType>(
 		url: ELoginUrls,
@@ -97,8 +89,6 @@ export class Auth {
 	 * @param error - The incoming error.
 	 * @param flowName - The flow that was executed, which raised this error.
 	 * @returns The simplified error message.
-	 *
-	 * @internal
 	 */
 	private parseAuthError(error: AxiosError<ILoginSubtaskResponse>, flowName: ELoginSubtasks): EAuthenticationErrors {
 		/** The error message to throw. */
@@ -127,8 +117,6 @@ export class Auth {
 	 * Fetches the credentials that can be used to authenticate as a guest user.
 	 *
 	 * @returns The guest credentials.
-	 *
-	 * @public
 	 */
 	public async getGuestCredential(): Promise<AuthCredential> {
 		// Creating a new blank credential
@@ -147,8 +135,6 @@ export class Auth {
 	 *
 	 * @param accCred - The credentials (email, username and password) to the Twitter account.
 	 * @returns The user credentials.
-	 *
-	 * @public
 	 */
 	public async getUserCredential(accCred: AccountCredential): Promise<AuthCredential> {
 		let cred: AuthCredential = await this.getGuestCredential();

@@ -1,7 +1,5 @@
 /**
  * The input data to be sent alternate user identification.
- *
- * @internal
  */
 export class AlternateUserIdentifierInput {
 	public text: string;

@@ -3,8 +3,6 @@ import { Cookie, CookieJar } from 'cookiejar';
 
 /**
  * The cookie containing the tokens that are used to authenticate against Twitter.
- *
- * @internal
  */
 export class AuthCookie {
 	/* eslint-disable @typescript-eslint/naming-convention */

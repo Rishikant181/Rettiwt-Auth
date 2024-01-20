@@ -1,7 +1,5 @@
 /**
  * The different types of authentication for authenticating against Twitter.
- *
- * @public
  */
 export enum EAuthenticationType {
 	GUEST = 'GUEST',
@@ -11,8 +9,6 @@ export enum EAuthenticationType {
 
 /**
  * Different types of error messages related to authentication returned by services.
- *
- * @public
  */
 export enum EAuthenticationErrors {
 	NOT_AUTHENTICATED = 'Cannot fetch this data without authentication',

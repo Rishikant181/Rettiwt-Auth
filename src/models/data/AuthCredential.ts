@@ -7,8 +7,6 @@ import { AuthHeader } from './AuthHeader';
 
 /**
  * The credentials for authenticating against Twitter.
- *
- * @public
  */
 export class AuthCredential {
 	/** The bearer token from twitter.com. */
@@ -36,8 +34,6 @@ export class AuthCredential {
 	 *
 	 * @param cookies - The list of cookie strings to be used for authenticating against Twitter.
 	 * @param guestToken - The guest token to be used to authenticate a guest session.
-	 *
-	 * @internal
 	 */
 	public constructor(cookies?: string[], guestToken?: string) {
 		this.authToken =
