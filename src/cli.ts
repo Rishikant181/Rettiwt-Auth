@@ -10,12 +10,36 @@ const program = new Command();
 // Setting program details
 program.name('rettiwt-auth').description('A CLI tool for authenticating against Twitter API');
 
-/**
- * This command generates the authentication credentials for authenticating againg Twitter API.
- */
+// Guest
 program
-	.command('generate')
-	.description('Generate authentication credentials for the given Twitter account')
+	.command('guest')
+	.description('Generated authentcation credentials for a guest user')
+	.option('-h, --header', 'Generate the credentials as HTTP headers')
+	.action((options: { header?: boolean }) => {
+		// Generating and returning the credentials
+		new Auth()
+			.getGuestCredential()
+			.then((res) => {
+				let creds;
+
+				// If credentials required as headers
+				if (options.header) {
+					creds = JSON.stringify(res.toHeader(), null, 4);
+				}
+				// If credentials required as token
+				else {
+					creds = res.guestToken;
+				}
+
+				console.log(creds);
+			})
+			.catch((err) => console.log(err));
+	});
+
+// User
+program
+	.command('user')
+	.description('Generate authentication credentials for a Twitter user')
 	.argument('<email>', 'The email id of the Twitter account')
 	.argument('<username>', 'The username associated with the Twitter account')
 	.argument('<password>', 'The password to the Twitter account')
