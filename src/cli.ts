@@ -15,9 +15,10 @@ program
 	.command('guest')
 	.description('Generated authentcation credentials for a guest user')
 	.option('-h, --header', 'Generate the credentials as HTTP headers')
-	.action((options: { header?: boolean }) => {
+	.option('-p, --proxy <URL>', 'The URL to the proxy server to use')
+	.action((options: { header?: boolean; proxy?: string }) => {
 		// Generating and returning the credentials
-		new Auth()
+		new Auth({ proxyUrl: options.proxy ? new URL(options.proxy) : undefined })
 			.getGuestCredential()
 			.then((res) => {
 				let creds;
@@ -44,9 +45,10 @@ program
 	.argument('<username>', 'The username associated with the Twitter account')
 	.argument('<password>', 'The password to the Twitter account')
 	.option('-h, --header', 'Generate the credentials as HTTP headers')
-	.action((email: string, username: string, password: string, options: { header?: boolean }) => {
+	.option('-p, --proxy <URL>', 'The URL to the proxy server to use')
+	.action((email: string, username: string, password: string, options: { header?: boolean; proxy?: string }) => {
 		// Logging in and returning the credentials
-		new Auth()
+		new Auth({ proxyUrl: options.proxy ? new URL(options.proxy) : undefined })
 			.getUserCredential({
 				email: email,
 				userName: username,
