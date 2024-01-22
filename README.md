@@ -4,7 +4,7 @@ A CLI tool for authenticating against Twitter API
 
 ## Prerequisites
 
--   NodeJS 20.9.0
+-   NodeJS 20.x
 
 ## Installation
 
@@ -23,6 +23,9 @@ The following are the two types of authentcation methods available, with each me
     - User Tweets
     - User Tweets and Replies
 2. **User Authentication**, with which, the following resources can be accessed:
+    - Create Tweet
+    - Create Retweet
+    - Favorite Tweet
     - Tweet Details
     - Tweet Likes
     - Tweet Retweets
@@ -38,17 +41,17 @@ The following are the two types of authentcation methods available, with each me
 
 The following examples demonstrate authenticating against Twitter API and generating the credentials.
 
-### 1. Generating credentials as an API key (for use with [Rettiwt-API](https://github.com/Rishikant181/Rettiwt-API))
+### 1. Generating an API key (for use with [Rettiwt-API](https://github.com/Rishikant181/Rettiwt-API))
 
 1.  Install the package globally by following the steps in the 'Installation' section.
 2.  Open a commandline/shell and use the command:  
-    `rettiwt-auth generate <email> <username> <password>`
+    `rettiwt-auth user <email> <username> <password>`
 
     Where,
 
-    -   \<email\> is the email to the Twitter account.
-    -   \<username\> is the username associated with the Twitter account.
-    -   \<password\> is the password to the Twitter account.
+    -   `<email>` is the email to the Twitter account.
+    -   `<username>` is the username associated with the Twitter account.
+    -   `<password>` is the password to the Twitter account.
 
 3.  Store the generated API key in a safe spot for later use.
 
@@ -56,18 +59,31 @@ The following examples demonstrate authenticating against Twitter API and genera
 
 1.  Install the package globally by following the steps in the 'Installation' section.
 2.  Open a commandline/shell and use the command:  
-    `rettiwt-auth generate -h <email> <username> <password>`
+    `rettiwt-auth user -h <email> <username> <password>`
 
     Where,
 
-    -   \<email\> is the email to the Twitter account.
-    -   \<username\> is the username associated with the Twitter account.
-    -   \<password\> is the password to the Twitter account.
+    -   `<email>` is the email to the Twitter account.
+    -   `<username>` is the username associated with the Twitter account.
+    -   `<password>` is the password to the Twitter account.
 
-    The '-h' option specifies the CLI to generate the credentials as HTTP headers.
+    The `-h` option specifies the CLI to generate the credentials as HTTP headers.
 
 3.  Store the generated API key in a safe spot for later use.
 4.  For authenticating the requests to Twitter, append the headers to outgoing HTTP requests.
+
+## Using a proxy
+
+In order to use a proxy while creating either 'guest' or 'user' credentials, use the option `-p <URL_to_proxy>` or `--proxy <URL_to_proxy>` to specify the proxy server to use. The following snippet demonstrates using a proxy for generating 'user' credentials:
+
+`rettiwt-auth user -p <URL> <email> <username> <password>`
+
+Where,
+
+-   `<URL>` is he URL to the proxy server to use.
+-   `<email>` is the email to the Twitter account.
+-   `<username>` is the username associated with the Twitter account.
+-   `<password>` is the password to the Twitter account.
 
 ## Additional CLI options
 
@@ -78,7 +94,7 @@ The following examples demonstrate authenticating against Twitter API and genera
 
     Where,
 
-    -   <command_name> is the name of a specific command from the list of available commands
+    -   `<command_name>` is the name of a specific command from the list of available commands
 
 ## Credential Validity
 
@@ -93,7 +109,3 @@ When you generate the credentials as API key/HTTP headers,
     -   Therefore make sure to always generate the API key/HTTP headers only once and use it till it expires, before generating a new API key/authentication credential.
 
 -   Whenever it is required to authenticate against Twitter API, use the stored API key/HTTP headers.
-
-## API Reference
-
-The complete API reference can be found [this](https://rishikant181.github.io/Rettiwt-Auth/) page

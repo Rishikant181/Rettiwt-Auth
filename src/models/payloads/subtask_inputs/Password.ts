@@ -1,20 +1,14 @@
-// TYPES
-import { IPasswordInput } from '../../../../types/request/payloads/subtasks/Password';
-
 /**
  * The input data to be sent for logging in using password.
- *
- * @internal
  */
-export class PasswordInput implements IPasswordInput {
+export class PasswordInput {
 	public password: string;
-	public link: string;
+	public link: string = 'next_link';
 
 	/**
 	 * @param password - The password to the Twitter account.
 	 */
 	public constructor(password: string) {
 		this.password = password;
-		this.link = 'next_link';
 	}
 }

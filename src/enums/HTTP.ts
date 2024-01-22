@@ -1,7 +1,5 @@
 /**
- * The different types of http status codes
- *
- * @internal
+ * The different types of http status codes.
  */
 export enum EHttpStatus {
 	BAD_REQUEST = 400,
