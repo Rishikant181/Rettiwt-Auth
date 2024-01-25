@@ -25,7 +25,7 @@ program
 
 				// If credentials required as headers
 				if (options.header) {
-					creds = JSON.stringify(res.toHeader(), null, 4);
+					creds = JSON.stringify(res.toHeader().toJSON(), null, 4);
 				}
 				// If credentials required as token
 				else {
@@ -59,11 +59,11 @@ program
 
 				// If credentials required as headers
 				if (options.header) {
-					creds = JSON.stringify(res.toHeader(), null, 4);
+					creds = JSON.stringify(res.toHeader().toJSON(), null, 4);
 				}
 				// If credentials required as api key
 				else {
-					creds = Buffer.from(res.toHeader().cookie ?? '').toString('base64');
+					creds = Buffer.from(res.toHeader().cookie as string).toString('base64');
 				}
 
 				console.log(creds);
