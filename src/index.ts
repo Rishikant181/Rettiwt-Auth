@@ -10,7 +10,6 @@ export * from './enums/Login';
 export * from './models/data/AccountCredential';
 export * from './models/data/AuthCookie';
 export * from './models/data/AuthCredential';
-export * from './models/data/AuthHeader';
 
 // PAYLOAD MODELS
 export * from './models/payloads/LoginSubtask';

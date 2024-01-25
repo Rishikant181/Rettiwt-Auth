@@ -1,9 +1,11 @@
+// PACKAGES
+import { AxiosHeaders } from 'axios';
+
 // ENUMS
 import { EAuthenticationType } from '../../enums/Authentication';
 
 // MODELS
 import { AuthCookie } from './AuthCookie';
-import { AuthHeader } from './AuthHeader';
 
 /**
  * The credentials for authenticating against Twitter.
@@ -64,7 +66,27 @@ export class AuthCredential {
 	/**
 	 * @returns The HTTP header representation of 'this' object.
 	 */
-	public toHeader(): AuthHeader {
-		return new AuthHeader(this);
+	public toHeader(): AxiosHeaders {
+		const headers = new AxiosHeaders();
+
+		/**
+		 * Conditionally initializing only those data which are supplied.
+		 *
+		 * This is done to ensure that the data that is not supplied, is not included in output, not even undefined.
+		 */
+		if (this.authToken) {
+			headers.set('authorization', `Bearer ${this.authToken}`);
+		}
+		if (this.guestToken) {
+			headers.set('x-guest-token', this.guestToken);
+		}
+		if (this.csrfToken) {
+			headers.set('x-csrf-token', this.csrfToken);
+		}
+		if (this.cookies) {
+			headers.set('cookie', this.cookies);
+		}
+
+		return headers;
 	}
 }
