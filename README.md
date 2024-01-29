@@ -26,6 +26,10 @@ The following are the two types of authentcation methods available, with each me
     - Create Tweet
     - Create Retweet
     - Favorite Tweet
+    - List Details
+    - List Tweets
+    - Media Upload
+    - Space Details
     - Tweet Details
     - Tweet Likes
     - Tweet Retweets
@@ -36,6 +40,7 @@ The following are the two types of authentcation methods available, with each me
     - User Likes
     - User Tweets
     - User Tweets and Replies
+    - Video Stream
 
 ## Getting started
 
