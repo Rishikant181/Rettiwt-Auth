@@ -1,22 +1,18 @@
-// TYPES
-import { IAccountCredential } from '../types/AccountCredential';
-
 /**
  * The credentials of the Twitter account to be logged into.
- *
- * @public
  */
-export class AccountCredential implements IAccountCredential {
+export class AccountCredential {
+	/** The email id associated with the Twitter account. */
 	public email: string;
+
+	/** The username associated with the Twitter account. */
 	public userName: string;
+
+	/** The password to the Twitter account. */
 	public password: string;
 
 	/**
-	 * Initializes a new AccountCredential instance.
-	 *
 	 * @param cred - The credentials to the Twitter account.
-	 *
-	 * @internal
 	 */
 	public constructor(cred: AccountCredential) {
 		this.email = cred.email;

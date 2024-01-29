@@ -1,22 +1,17 @@
-// TYPES
-import { ILoginSubtaskInput, ILoginSubtaskPayload } from '../../../types/request/payloads/LoginSubtask';
-
 // ENUMS
-import { ELoginSubtasks } from '../../../enums/Login';
+import { ELoginSubtasks } from '../../enums/Login';
 
 // MODELS
-import { JsInstrumentationInput } from './subtasks/JsInstrumentation';
-import { UserIdentifierInput } from './subtasks/UserIdentifier';
-import { AlternateUserIdentifierInput } from './subtasks/AlternateUserIdentifier';
-import { PasswordInput } from './subtasks/Password';
-import { AccountDuplicationCheckInput } from './subtasks/AccountDuplicationCheck';
+import { JsInstrumentationInput } from './subtask_inputs/JsInstrumentation';
+import { UserIdentifierInput } from './subtask_inputs/UserIdentifier';
+import { AlternateUserIdentifierInput } from './subtask_inputs/AlternateUserIdentifier';
+import { PasswordInput } from './subtask_inputs/Password';
+import { AccountDuplicationCheckInput } from './subtask_inputs/AccountDuplicationCheck';
 
 /**
  * The payload to be sent for each login subtask.
- *
- * @internal
  */
-export class LoginSubtaskPayload implements ILoginSubtaskPayload {
+export class LoginSubtaskPayload {
 	/* eslint-disable @typescript-eslint/naming-convention */
 	public flow_token: string;
 	public subtask_inputs: LoginSubtaskInput[];
@@ -35,10 +30,8 @@ export class LoginSubtaskPayload implements ILoginSubtaskPayload {
 
 /**
  * The subtask input according to the type of subtask to be executed.
- *
- * @internal
  */
-class LoginSubtaskInput implements ILoginSubtaskInput {
+class LoginSubtaskInput {
 	/* eslint-disable @typescript-eslint/naming-convention */
 	public subtask_id: string;
 	public js_instrumentation?: JsInstrumentationInput;

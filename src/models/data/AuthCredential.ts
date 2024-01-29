@@ -1,37 +1,39 @@
-// ENUMS
-import { EAuthenticationType } from '../enums/Authentication';
+// PACKAGES
+import { AxiosHeaders } from 'axios';
 
-// TYPES
-import { IAuthCredential } from '../types/AuthCredential';
+// ENUMS
+import { EAuthenticationType } from '../../enums/Authentication';
 
 // MODELS
 import { AuthCookie } from './AuthCookie';
-import { AuthHeader } from './AuthHeader';
 
 /**
  * The credentials for authenticating against Twitter.
  *
- * @public
+ * Depending on which tokens are present, the authentication type is determined as follows:
+ * - authToken, guestToken =\> Guest authentication.
+ * - authToken, csrfToken, cookie =\> User authentication.
+ * - authToken, guestToken, cookie =\> Guest authentication while logging in.
  */
-export class AuthCredential implements IAuthCredential {
+export class AuthCredential {
+	/** The bearer token from twitter.com. */
 	public authToken?: string;
+
+	/** The guest token provided by Twitter API. */
 	public guestToken?: string;
+
+	/** The CSRF token for the session. */
 	public csrfToken?: string;
+
+	/** The cookie of the twitter account, which is used to authenticate against twitter. */
 	public cookies?: string;
+
+	/** The type of authentication. */
 	public authenticationType?: EAuthenticationType;
 
 	/**
-	 * Generates a new AuthCredentials using the given credentials.
-	 *
-	 * Depending on which tokens are present, the authentication type is determined as follows:
-	 * - authToken, guestToken =\> Guest authentication.
-	 * - authToken, csrfToken, cookie =\> User authentication.
-	 * - authToken, guestToken, cookie =\> Guest authentication while logging in.
-	 *
 	 * @param cookies - The list of cookie strings to be used for authenticating against Twitter.
 	 * @param guestToken - The guest token to be used to authenticate a guest session.
-	 *
-	 * @internal
 	 */
 	public constructor(cookies?: string[], guestToken?: string) {
 		this.authToken =
@@ -62,11 +64,29 @@ export class AuthCredential implements IAuthCredential {
 	}
 
 	/**
-	 * Converts 'this' object to it's equivalent HTTP header representation.
-	 *
-	 * @returns 'this' object's equivalent HTTP header representation.
+	 * @returns The HTTP header representation of 'this' object.
 	 */
-	public toHeader(): AuthHeader {
-		return new AuthHeader(this);
+	public toHeader(): AxiosHeaders {
+		const headers = new AxiosHeaders();
+
+		/**
+		 * Conditionally initializing only those data which are supplied.
+		 *
+		 * This is done to ensure that the data that is not supplied, is not included in output, not even undefined.
+		 */
+		if (this.authToken) {
+			headers.set('authorization', `Bearer ${this.authToken}`);
+		}
+		if (this.guestToken) {
+			headers.set('x-guest-token', this.guestToken);
+		}
+		if (this.csrfToken) {
+			headers.set('x-csrf-token', this.csrfToken);
+		}
+		if (this.cookies) {
+			headers.set('cookie', this.cookies);
+		}
+
+		return headers;
 	}
 }
