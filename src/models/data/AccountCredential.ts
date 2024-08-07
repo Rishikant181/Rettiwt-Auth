@@ -5,11 +5,11 @@ export class AccountCredential {
 	/** The email id associated with the Twitter account. */
 	public email: string;
 
-	/** The username associated with the Twitter account. */
-	public userName: string;
-
 	/** The password to the Twitter account. */
 	public password: string;
+
+	/** The username associated with the Twitter account. */
+	public userName: string;
 
 	/**
 	 * @param cred - The credentials to the Twitter account.

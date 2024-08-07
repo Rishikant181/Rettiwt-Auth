@@ -3,8 +3,8 @@
  */
 export class UserIdentifierInput {
 	/* eslint-disable @typescript-eslint/naming-convention */
-	public setting_responses: SettingResponse[];
 	public link: string = 'next_link';
+	public setting_responses: SettingResponse[];
 	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**

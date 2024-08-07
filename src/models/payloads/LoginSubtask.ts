@@ -2,11 +2,11 @@
 import { ELoginSubtasks } from '../../enums/Login';
 
 // MODELS
-import { JsInstrumentationInput } from './subtask_inputs/JsInstrumentation';
-import { UserIdentifierInput } from './subtask_inputs/UserIdentifier';
-import { AlternateUserIdentifierInput } from './subtask_inputs/AlternateUserIdentifier';
-import { PasswordInput } from './subtask_inputs/Password';
 import { AccountDuplicationCheckInput } from './subtask_inputs/AccountDuplicationCheck';
+import { AlternateUserIdentifierInput } from './subtask_inputs/AlternateUserIdentifier';
+import { JsInstrumentationInput } from './subtask_inputs/JsInstrumentation';
+import { PasswordInput } from './subtask_inputs/Password';
+import { UserIdentifierInput } from './subtask_inputs/UserIdentifier';
 
 /**
  * The payload to be sent for each login subtask.
@@ -33,12 +33,12 @@ export class LoginSubtaskPayload {
  */
 class LoginSubtaskInput {
 	/* eslint-disable @typescript-eslint/naming-convention */
-	public subtask_id: string;
+	public check_logged_in_account?: AccountDuplicationCheckInput;
+	public enter_password?: PasswordInput;
+	public enter_text?: AlternateUserIdentifierInput;
 	public js_instrumentation?: JsInstrumentationInput;
 	public settings_list?: UserIdentifierInput;
-	public enter_text?: AlternateUserIdentifierInput;
-	public enter_password?: PasswordInput;
-	public check_logged_in_account?: AccountDuplicationCheckInput;
+	public subtask_id: string;
 	/* eslint-enable @typescript-eslint/naming-convention */
 
 	/**

@@ -1,21 +1,22 @@
 // PACKAGES
-import axios, { AxiosError, AxiosResponse } from 'axios';
 import https, { Agent } from 'https';
+
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { HttpsProxyAgent } from 'https-proxy-agent';
 
 // ENUMS
-import { ELoginUrls, ELoginSubtasks } from './enums/Login';
+import { EAuthenticationErrors } from './enums/Authentication';
+import { ELoginSubtasks, ELoginUrls } from './enums/Login';
 
 // TYPES
+import { AccountCredential } from './models/data/AccountCredential';
+import { AuthCredential } from './models/data/AuthCredential';
+import { LoginSubtaskPayload } from './models/payloads/LoginSubtask';
 import { IAuthConfig } from './types/AuthConfig';
 import { Root as IGuestTokenResponse } from './types/response/GuestToken';
 import { Root as ILoginSubtaskResponse } from './types/response/LoginSubtask';
 
 // MODELS
-import { AuthCredential } from './models/data/AuthCredential';
-import { AccountCredential } from './models/data/AccountCredential';
-import { LoginSubtaskPayload } from './models/payloads/LoginSubtask';
-import { EAuthenticationErrors } from './enums/Authentication';
 
 /**
  * This class deals with authenticating against Twitter API.
@@ -42,6 +43,25 @@ export class Auth {
 	}
 
 	/**
+	 * Executes the given login subtask.
+	 *
+	 * @param url - The URL against which the subtask is to be executed.
+	 * @param payload - The payload to be sent.
+	 *
+	 * @returns The response received from executing the subtask.
+	 */
+	private async executeSubtask<ResponseType>(
+		url: ELoginUrls,
+		credential: AuthCredential,
+		payload?: NonNullable<unknown>,
+	): Promise<AxiosResponse<ResponseType>> {
+		return await axios.post<ResponseType>(url, payload, {
+			headers: { ...credential.toHeader() },
+			httpsAgent: this.httpsAgent,
+		});
+	}
+
+	/**
 	 * @param subtask - The name of the subtask.
 	 * @param flowToken - The flow token for the subtask.
 	 * @param accCred - The account credentials to the Twitter account.
@@ -62,25 +82,6 @@ export class Auth {
 		} else {
 			return new LoginSubtaskPayload(subtask, flowToken);
 		}
-	}
-
-	/**
-	 * Executes the given login subtask.
-	 *
-	 * @param url - The URL against which the subtask is to be executed.
-	 * @param payload - The payload to be sent.
-	 *
-	 * @returns The response received from executing the subtask.
-	 */
-	private async executeSubtask<ResponseType>(
-		url: ELoginUrls,
-		credential: AuthCredential,
-		payload?: NonNullable<unknown>,
-	): Promise<AxiosResponse<ResponseType>> {
-		return await axios.post<ResponseType>(url, payload, {
-			headers: { ...credential.toHeader() },
-			httpsAgent: this.httpsAgent,
-		});
 	}
 
 	/**

@@ -2,6 +2,7 @@
 
 // PACKAGES
 import { Command } from 'commander';
+
 import { Auth } from './';
 
 // Creating a new commandline program

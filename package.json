@@ -4,9 +4,7 @@
 	"description": "A CLI tool for authenticating against Twitter API",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
-	"bin": {
-		"rettiwt-auth": "dist/cli.js"
-	},
+	"bin": "dist/cli.js",
 	"scripts": {
 		"build": "tsc",
 		"prepare": "tsc",
@@ -24,12 +22,17 @@
 		"url": "https://github.com/Rishikant181/Rettiwt-Auth/issues"
 	},
 	"homepage": "https://github.com/Rishikant181/Rettiwt-Auth#readme",
+	"engines": {
+		"node": "^20.11.1"
+	},
+	"packageManager": "yarn@4.4.0",
 	"devDependencies": {
 		"@types/cookiejar": "2.1.2",
 		"@types/node": "20.2.5",
 		"@typescript-eslint/eslint-plugin": "5.59.8",
 		"@typescript-eslint/parser": "5.59.8",
 		"eslint": "8.41.0",
+		"eslint-plugin-import": "2.29.1",
 		"eslint-plugin-tsdoc": "0.2.17",
 		"nodemon": "2.0.22",
 		"prettier": "2.8.8",

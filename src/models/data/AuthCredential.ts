@@ -19,17 +19,17 @@ export class AuthCredential {
 	/** The bearer token from twitter.com. */
 	public authToken?: string;
 
-	/** The guest token provided by Twitter API. */
-	public guestToken?: string;
-
-	/** The CSRF token for the session. */
-	public csrfToken?: string;
+	/** The type of authentication. */
+	public authenticationType?: EAuthenticationType;
 
 	/** The cookie of the twitter account, which is used to authenticate against twitter. */
 	public cookies?: string;
 
-	/** The type of authentication. */
-	public authenticationType?: EAuthenticationType;
+	/** The CSRF token for the session. */
+	public csrfToken?: string;
+
+	/** The guest token provided by Twitter API. */
+	public guestToken?: string;
 
 	/**
 	 * @param cookies - The list of cookie strings to be used for authenticating against Twitter.
